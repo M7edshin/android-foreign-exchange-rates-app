@@ -26,12 +26,29 @@
         android:layout_margin="10sp"
         android:layout_below="@+id/tvBaseCurrency"/>
 
-    <TextView
-        android:id="@+id/tvRates"
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rates"
-        android:layout_below="@id/tvLatestDate"/>
+        android:fillViewport="true"
+        android:layout_below="@id/tvLatestDate"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/tvRates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rates"
+            android:layout_margin="10sp" />
+
+    </ScrollView>
+
+
+    <TextView
+        android:id="@+id/tvInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Latest update based on central banks across Europe\nThe rates are updated daily around 4PM CET."
+        android:layout_alignParentBottom="true" />
 
     <ProgressBar
         android:id="@+id/loading_spinner"
@@ -48,11 +65,5 @@
         android:layout_centerInParent="true"
         android:text="Get Latest EUR Foreign Exchange Reference Rates"/>
 
-    <TextView
-        android:id="@+id/tvInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Latest update based on central banks across Europe\nThe rates are updated daily around 4PM CET."
-        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

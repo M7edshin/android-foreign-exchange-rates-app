@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="shahin.euexchange.RatesActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_refresh_rates"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_refresh_rates"
         app:showAsAction="never" />
+
 </menu>

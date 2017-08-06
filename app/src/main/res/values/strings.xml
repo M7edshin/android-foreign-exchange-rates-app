@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">euexchange</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_refresh_rates">Refresh Rates</string>
+    <string name="str_turn_on_internet">Turn on your WiFi or data for connection then try again</string>
+    <string name="str_no_internet_try_again">No internet connection!. TRY AGAIN</string>
+    <string name="str_latest_date">Latest update:  </string>
 </resources>

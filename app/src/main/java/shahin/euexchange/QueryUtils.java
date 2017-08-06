@@ -23,6 +23,8 @@ import java.util.Iterator;
 public class QueryUtils {
 
     private static final String LOG_TAG = QueryUtils.class.getName();
+    private static final String JSON_KEY_DATE = "date";
+    private static final String JSON_KEY_RATES = "rates";
 
     /**
      * Step 1: Extract data from JSON Format
@@ -34,13 +36,13 @@ public class QueryUtils {
 
         try {
             JSONObject baseJsonResponse = new JSONObject(currencyRatesJSON);
-            latestDate = baseJsonResponse.getString("date");
-            JSONObject ratesObject = baseJsonResponse.getJSONObject("rates");
+            latestDate = baseJsonResponse.getString(JSON_KEY_DATE);
+            JSONObject ratesObject = baseJsonResponse.getJSONObject(JSON_KEY_RATES);
 
             for(Iterator<String> iterator = ratesObject.keys(); iterator.hasNext();){
                 String key = iterator.next();
                 Object value = ratesObject.get(key);
-                ratesArrayList.add(key + value);
+                ratesArrayList.add(key + " \t \t \t" + " Rate " + "\t \t \t" + value);
             }
 
             return new Currency(latestDate,ratesArrayList);
