@@ -1,7 +1,21 @@
 <resources>
-    <string name="app_name">euexchange</string>
+    <string name="app_name">€ Exchange Rates</string>
     <string name="action_refresh_rates">Refresh Rates</string>
+    <string name="action_rates_info">Rates information</string>
+    <string name="action_report_suggest">Suggest or Report</string>
+    <string name="action_exit">Exit</string>
     <string name="str_turn_on_internet">Turn on your WiFi or data for connection then try again</string>
     <string name="str_no_internet_try_again">No internet connection!. TRY AGAIN</string>
-    <string name="str_latest_date">Latest update:  </string>
+    <string name="str_latest_date">Latest update:</string>
+    <string name="str_update_info">Latest update based on \ncentral banks across Europe \nThe rates are updated daily around 4PM CET.</string>
+    <string name="str_euro_base_currency">All currencies quoted against the euro € (Base)</string>
+    <string name="str_cur_symbol_placeholder">USD</string>
+    <string name="str_cur_name_placeholder">US Dollar</string>
+    <string name="str_country_placeholder">United States</string>
+    <string name="str_rate_placeholder">1.1838</string>
+    <string name="str_enter_the_amount">Please enter an amount in order to do the conversion</string>
+    <string name="str_the_mount_you_wish">Enter the amount you wish to convert</string>
+    <string name="str_suggest_report">Suggest or Report</string>
+    <string name="str_no_emails_clients_installed">There are no email clients or apps installed on your device.</string>
+    <string name="str_updating_the_rates">Updating the rates...</string>
 </resources>

@@ -1,69 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="shahin.euexchange.RatesActivity"
-    tools:showIn="@layout/activity_rates">
+    tools:showIn="@layout/activity_rates"
+    android:background="@color/colorWholeApp">
 
     <TextView
         android:id="@+id/tvBaseCurrency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All currencies quoted against the euro € (base currency)"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10sp"/>
+        android:text="@string/str_euro_base_currency"
+        style="@style/TextViewStyle" />
 
     <TextView
         android:id="@+id/tvLatestDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Latest update:"
-        android:layout_centerHorizontal="true"
+        android:text="@string/str_latest_date"
         android:layout_margin="10sp"
-        android:layout_below="@+id/tvBaseCurrency"/>
+        style="@style/TextViewStyle" />
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fillViewport="true"
-        android:layout_below="@id/tvLatestDate"
-        android:layout_centerHorizontal="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/tvRates"
+        <ListView
+            android:id="@+id/lstRates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5.0sp"
+            android:layout_margin="@dimen/size_5"></ListView>
+
+        <ImageView
+            android:id="@+id/imgEmpty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rates"
-            android:layout_margin="10sp" />
+            android:layout_centerInParent="true"
+            android:src="@drawable/connection" />
 
-    </ScrollView>
+        <ProgressBar
+            android:id="@+id/loading_spinner"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
 
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tvInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Latest update based on central banks across Europe\nThe rates are updated daily around 4PM CET."
-        android:layout_alignParentBottom="true" />
+        android:text="@string/str_update_info"
+        style="@style/TextViewStyle" />
 
-    <ProgressBar
-        android:id="@+id/loading_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
-
-    <Button
-        android:id="@+id/btnGetRates"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="50sp"
-        android:layout_margin="20sp"
-        android:layout_centerInParent="true"
-        android:text="Get Latest EUR Foreign Exchange Reference Rates"/>
-
-
-</RelativeLayout>
+</LinearLayout>

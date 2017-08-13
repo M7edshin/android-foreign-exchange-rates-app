@@ -2,10 +2,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="shahin.euexchange.RatesActivity">
+
     <item
         android:id="@+id/action_refresh_rates"
         android:orderInCategory="100"
         android:title="@string/action_refresh_rates"
+        android:icon="@mipmap/ic_coin"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_rates_info"
+        android:orderInCategory="100"
+        android:title="@string/action_rates_info"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_report_suggest"
+        android:orderInCategory="100"
+        android:title="@string/action_report_suggest"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_exit"
+        android:orderInCategory="100"
+        android:title="@string/action_exit"
+        app:showAsAction="never" />
+
 
 </menu>

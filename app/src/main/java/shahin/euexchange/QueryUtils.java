@@ -1,5 +1,6 @@
 package shahin.euexchange;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by M7edShin on 01/08/2017.
@@ -26,30 +28,41 @@ public class QueryUtils {
     private static final String JSON_KEY_DATE = "date";
     private static final String JSON_KEY_RATES = "rates";
 
+
+    private QueryUtils() {
+    }
+
     /**
      * Step 1: Extract data from JSON Format
+     *
      * @param currencyRatesJSON
      */
-    private static Currency extractCurrencyRatesFromJson(String currencyRatesJSON){
+    private static List<CurrencyRates> extractCurrencyRatesFromJson(String currencyRatesJSON) {
+
+        if (TextUtils.isEmpty(currencyRatesJSON))
+            return null;// If the JSON string is empty or null, then return early.
+
         String latestDate;
-        ArrayList<String> ratesArrayList = new ArrayList<>();
+        List<CurrencyRates> ratesList = new ArrayList<>(); //ArrayList from List Object
+
 
         try {
             JSONObject baseJsonResponse = new JSONObject(currencyRatesJSON);
             latestDate = baseJsonResponse.getString(JSON_KEY_DATE);
             JSONObject ratesObject = baseJsonResponse.getJSONObject(JSON_KEY_RATES);
-
             for(Iterator<String> iterator = ratesObject.keys(); iterator.hasNext();){
-                String key = iterator.next();
-                Object value = ratesObject.get(key);
-                ratesArrayList.add(key + " \t \t \t" + " Rate " + "\t \t \t" + value);
+                String currencySymbol = iterator.next();
+                double rate = (double) ratesObject.get(currencySymbol);
+
+                CurrencyRates currencyRates = new CurrencyRates(R.mipmap.ic_launcher_round, currencySymbol, "currencyName",
+                        "countryName", latestDate, rate);
+                ratesList.add(currencyRates);
             }
 
-            return new Currency(latestDate,ratesArrayList);
         } catch (JSONException e) {
-            Log.e(LOG_TAG, "Problem parsing the currency rate JSON results", e);
+            Log.e(LOG_TAG, "Problem parsing the currency rates in JSON", e);
         }
-        return null;
+        return ratesList;
     }
 
     /**
@@ -67,15 +80,15 @@ public class QueryUtils {
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
             urlConnection.connect();
 
-            if(urlConnection.getResponseCode() == 200){
+            if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
-            }else {
+            } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
 
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the currency rates JSON Results",e);
+            Log.e(LOG_TAG, "Problem retrieving the currency rates JSON Results", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -116,14 +129,16 @@ public class QueryUtils {
         URL url = null;
         try {
             url = new URL(stringUrl);
-        } catch (MalformedURLException exception) {
-            Log.e(LOG_TAG, "Error with creating URL", exception);
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "Error with creating URL", e);
             return null;
         }
         return url;
     }
 
-    public static Currency fetchCurrencyRatesData(String requestUrl){
+    public static List<CurrencyRates> fetchCurrencyRatesData(String requestUrl) {
+
+        Log.i(LOG_TAG, "TEST: fetchCurrencyRatesData() called...");
 
         /**
          * To force the background thread to sleep for 2 seconds, we are temporarily simulating
@@ -148,7 +163,6 @@ public class QueryUtils {
             Log.e(LOG_TAG, "Error with perform HTTP request to the URL", e);
         }
 
-        Currency currency = extractCurrencyRatesFromJson(jsonResponse);
-        return currency;
+        return extractCurrencyRatesFromJson(jsonResponse);
     }
 }
