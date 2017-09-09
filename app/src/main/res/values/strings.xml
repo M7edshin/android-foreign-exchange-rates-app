@@ -18,4 +18,5 @@
     <string name="str_suggest_report">Suggest or Report</string>
     <string name="str_no_emails_clients_installed">There are no email clients or apps installed on your device.</string>
     <string name="str_updating_the_rates">Updating the rates...</string>
+    <string name="action_rate_feedback">Rate - Feedback</string>
 </resources>

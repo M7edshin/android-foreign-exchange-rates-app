@@ -1,6 +1,7 @@
 package shahin.euexchange;
 
 import android.app.LoaderManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,6 +27,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +40,8 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
     private ImageView imgEmpty;
     private ProgressBar loading_spinner;
     private ListView lstRates;
+
+    private AdView mAdView;
 
     public static final String LOG_TAG = RatesActivity.class.getSimpleName();
     private static final String CURRENCY_RATES_REQUEST_URL = "http://api.fixer.io/latest";
@@ -58,6 +65,12 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
                 setInputDialog();
             }
         });
+
+
+        MobileAds.initialize(this, "ca-app-pub-1885749404874590~8635369581");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         tvLatestDate = (TextView)findViewById(R.id.tvLatestDate);
 
@@ -180,6 +193,11 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+
+            case R.id.action_rate:
+                rateApp();
+                return true;
+
             case R.id.action_refresh_rates:
                 Toast.makeText(getApplicationContext(), R.string.str_updating_the_rates, Toast.LENGTH_SHORT).show();
                 getLatestRates();
@@ -218,6 +236,22 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(RatesActivity.this, R.string.str_no_emails_clients_installed, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void rateApp(){
+        Uri uri = Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName())));
         }
     }
 
