@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "835743810204",
+    "firebase_url": "https://eu-exchange-rate.firebaseio.com",
+    "project_id": "eu-exchange-rate",
+    "storage_bucket": "eu-exchange-rate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835743810204:android:2143dc0cd1b20c6f",
+        "android_client_info": {
+          "package_name": "shahin.euexchange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835743810204-3d0hrdsj0lm0rqt2b3v0g6594ig8rqgg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "shahin.euexchange",
+            "certificate_hash": "ce184a31bfd9d0a447e04239d075ea41928a39fc"
+          }
+        },
+        {
+          "client_id": "835743810204-oki3b1cagjt8n4qjfgp099pen3duad8a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzSEMbaLP4FcPis0ek-7jwmKMpDss3ORg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835743810204-oki3b1cagjt8n4qjfgp099pen3duad8a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
