@@ -1,14 +1,12 @@
 package shahin.euexchange;
 
 import android.app.LoaderManager;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -27,38 +25,35 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
 
+//Created by Mohamed Shahin on 01/08/2017.
+
 public class RatesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<CurrencyRates>> {
-
-    private TextView tvLatestDate;
-    private ImageView imgEmpty;
-    private ProgressBar loading_spinner;
-    private ListView lstRates;
-
-    private AdView mAdView;
 
     public static final String LOG_TAG = RatesActivity.class.getSimpleName();
     private static final String CURRENCY_RATES_REQUEST_URL = "http://api.fixer.io/latest";
     private static final int RATES_LOADER_ID = 1;
-
-    private String amount = "";
-
     CurrencyRatesAdapter adapter;
+    private TextView tvLatestDate;
+    private ImageView imgEmpty;
+    private ProgressBar loading_spinner;
+    private ListView lstRates;
+    private String amount = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rates);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,18 +63,18 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
 
 
         MobileAds.initialize(this, "ca-app-pub-1885749404874590~8635369581");
-        mAdView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        tvLatestDate = (TextView)findViewById(R.id.tvLatestDate);
+        tvLatestDate = findViewById(R.id.tvLatestDate);
 
-        loading_spinner = (ProgressBar)findViewById(R.id.loading_spinner);
+        loading_spinner = findViewById(R.id.loading_spinner);
         loading_spinner.setVisibility(View.INVISIBLE);
 
-        imgEmpty = (ImageView) findViewById(R.id.imgEmpty);
+        imgEmpty = findViewById(R.id.imgEmpty);
 
-        lstRates = (ListView) findViewById(R.id.lstRates);
+        lstRates = findViewById(R.id.lstRates);
         lstRates.setEmptyView(imgEmpty);
 
         adapter = new CurrencyRatesAdapter(this, new ArrayList<CurrencyRates>());
@@ -106,7 +101,6 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
 
 
     }
-
 
     @Override
     public Loader<List<CurrencyRates>> onCreateLoader(int id, Bundle args) {
@@ -166,13 +160,13 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
         builder.setView(input);
 
         // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 amount = input.getText().toString();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -194,33 +188,15 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
 
         switch (item.getItemId()) {
 
-            case R.id.action_rate:
-                rateApp();
-                return true;
-
             case R.id.action_refresh_rates:
                 Toast.makeText(getApplicationContext(), R.string.str_updating_the_rates, Toast.LENGTH_SHORT).show();
                 getLatestRates();
-                return true;
-            case R.id.action_rates_info:
-                String url = "https://en.wikipedia.org/wiki/Exchange_rate";
-                Uri webPage = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
                 return true;
 
             case R.id.action_report_suggest:
                 sendEmail(getString(R.string.str_suggest_report));
                 return true;
-
-            case R.id.action_exit:
-                finish();
-                System.exit(0);
-                return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -236,22 +212,6 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(RatesActivity.this, R.string.str_no_emails_clients_installed, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void rateApp(){
-        Uri uri = Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
-        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-        // To count with Play market backstack, After pressing back button,
-        // to taken back to our application, we need to add following flags to intent.
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        try {
-            startActivity(goToMarket);
-        } catch (ActivityNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName())));
         }
     }
 
@@ -380,7 +340,5 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
         listOfTheRates.get(30).setCountry("South Africa");
         listOfTheRates.get(30).setCurrencyName("South African rand");
     }
-
-
 
 }

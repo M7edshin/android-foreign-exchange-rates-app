@@ -18,9 +18,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by M7edShin on 01/08/2017.
- */
+
+//Created by Mohamed Shahin on 01/08/2017.
 
 public class QueryUtils {
 
@@ -40,17 +39,16 @@ public class QueryUtils {
     private static List<CurrencyRates> extractCurrencyRatesFromJson(String currencyRatesJSON) {
 
         if (TextUtils.isEmpty(currencyRatesJSON))
-            return null;// If the JSON string is empty or null, then return early.
+            return null;
 
         String latestDate;
-        List<CurrencyRates> ratesList = new ArrayList<>(); //ArrayList from List Object
-
+        List<CurrencyRates> ratesList = new ArrayList<>();
 
         try {
             JSONObject baseJsonResponse = new JSONObject(currencyRatesJSON);
             latestDate = baseJsonResponse.getString(JSON_KEY_DATE);
             JSONObject ratesObject = baseJsonResponse.getJSONObject(JSON_KEY_RATES);
-            for(Iterator<String> iterator = ratesObject.keys(); iterator.hasNext();){
+            for (Iterator<String> iterator = ratesObject.keys(); iterator.hasNext(); ) {
                 String currencySymbol = iterator.next();
                 double rate = (double) ratesObject.get(currencySymbol);
 
@@ -94,7 +92,6 @@ public class QueryUtils {
                 urlConnection.disconnect();
             }
             if (inputStream != null) {
-                // function must handle java.io.IOException here
                 inputStream.close();
             }
         }
@@ -120,13 +117,12 @@ public class QueryUtils {
         return output.toString();
     }
 
-
     /**
      * Step 4
      * Returns new URL object from the given string URL.
      */
     private static URL createUrl(String stringUrl) {
-        URL url = null;
+        URL url;
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException e) {
@@ -140,29 +136,14 @@ public class QueryUtils {
 
         Log.i(LOG_TAG, "TEST: fetchCurrencyRatesData() called...");
 
-        /**
-         * To force the background thread to sleep for 2 seconds, we are temporarily simulating
-         * a very slow network response time.
-         * We are “pretending” that it took a long time to fetch the response.
-         * That allows us to see the loading spinner on the screen for a little longer than it normally would appear for.
-         */
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // Create URL object
         URL url = createUrl(requestUrl);
 
-        // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = "";
         try {
             jsonResponse = makeHttpRequest(url);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error with perform HTTP request to the URL", e);
         }
-
         return extractCurrencyRatesFromJson(jsonResponse);
     }
 }

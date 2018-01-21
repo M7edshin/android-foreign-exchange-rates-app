@@ -1,8 +1,6 @@
 package shahin.euexchange;
 
-/**
- * Created by M7edShin on 30/07/2017.
- */
+//Created by Mohamed Shahin on 30/07/2017.
 
 public class CurrencyRates {
 
@@ -22,20 +20,12 @@ public class CurrencyRates {
         this.rate = rate;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setCurrencyName(String currencyName) {
-        this.currencyName = currencyName;
+    public int getCountryResourceId() {
+        return countryResourceId;
     }
 
     public void setCountryResourceId(int countryResourceId) {
         this.countryResourceId = countryResourceId;
-    }
-
-    public int getCountryResourceId() {
-        return countryResourceId;
     }
 
     public String getCurrencySymbol() {
@@ -46,8 +36,16 @@ public class CurrencyRates {
         return currencyName;
     }
 
+    public void setCurrencyName(String currencyName) {
+        this.currencyName = currencyName;
+    }
+
     public String getCountry() {
         return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getLatestDate() {

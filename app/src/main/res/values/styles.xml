@@ -19,11 +19,9 @@
 
     <style name="TextViewStyle">
 
-        <item name="android:textSize">15sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:layout_margin">10sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">#FAFAFA</item>
-
+        <item name="android:padding">5dp</item>
     </style>
 
     <style name="ItemListViewStyle">

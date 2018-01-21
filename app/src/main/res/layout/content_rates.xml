@@ -4,50 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWholeApp"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="shahin.euexchange.RatesActivity"
-    tools:showIn="@layout/activity_rates"
-    android:background="@color/colorWholeApp">
-
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-1885749404874590/3646110245">
-    </com.google.android.gms.ads.AdView>
+    tools:showIn="@layout/activity_rates">
 
     <TextView
         android:id="@+id/tvBaseCurrency"
+        style="@style/TextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/str_euro_base_currency"
-        style="@style/TextViewStyle" />
+        android:text="@string/str_update_info" />
 
     <TextView
         android:id="@+id/tvLatestDate"
+        style="@style/TextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/str_latest_date"
-        android:layout_margin="10sp"
-        style="@style/TextViewStyle" />
+        android:textStyle="bold"
+        android:text="@string/str_latest_date" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="2">
 
         <ListView
             android:id="@+id/lstRates"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/size_5"
             android:divider="@android:color/transparent"
-            android:dividerHeight="5.0sp"
-            android:layout_margin="@dimen/size_5"></ListView>
+            android:dividerHeight="5.0sp" />
 
         <ImageView
             android:id="@+id/imgEmpty"
@@ -65,11 +54,11 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tvInfo"
-        android:layout_width="wrap_content"
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/str_update_info"
-        style="@style/TextViewStyle" />
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-1885749404874590/3646110245" />
 
 </LinearLayout>
