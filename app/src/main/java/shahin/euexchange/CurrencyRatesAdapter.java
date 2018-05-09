@@ -42,9 +42,9 @@ public class CurrencyRatesAdapter extends ArrayAdapter<CurrencyRates> {
 
             convertView.setTag(viewHolder);
 
-        } else
+        }
 
-            viewHolder = (ViewHolder) convertView.getTag();
+        viewHolder = (ViewHolder) convertView.getTag();
 
         if (currentRate != null) {
             viewHolder.imgCountry.setImageResource(currentRate.getCountryResourceId());

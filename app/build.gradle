@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "shahin.euexchange"
         minSdkVersion 21
@@ -29,9 +28,9 @@ dependencies {
     compile 'com.android.support:design:26.+'
     testCompile 'junit:junit:4.12'
 
-    compile 'com.google.firebase:firebase-core:11.2.0'
-    compile 'com.google.firebase:firebase-ads:11.2.0'
-    compile 'com.google.android.gms:play-services-ads:11.2.0'
+    compile 'com.google.firebase:firebase-core:11.8.0'
+    compile 'com.google.firebase:firebase-core:11.8.0'
+    compile 'com.google.firebase:firebase-ads:11.8.0'
 
 }
 
