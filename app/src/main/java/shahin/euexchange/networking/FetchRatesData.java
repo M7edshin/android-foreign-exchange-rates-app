@@ -1,4 +1,4 @@
-package shahin.euexchange;
+package shahin.euexchange.networking;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,47 +18,47 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import shahin.euexchange.models.Rates;
+import shahin.euexchange.R;
 
 //Created by Mohamed Shahin on 01/08/2017.
 
-public class QueryUtils {
+public class FetchRatesData {
 
-    private static final String LOG_TAG = QueryUtils.class.getName();
+    private static final String LOG_TAG = FetchRatesData.class.getName();
+
     private static final String JSON_KEY_DATE = "date";
     private static final String JSON_KEY_RATES = "rates";
 
 
-    private QueryUtils() {
+    private FetchRatesData() {
     }
 
     /**
      * Step 1: Extract data from JSON Format
-     *
-     * @param currencyRatesJSON
      */
-    private static List<CurrencyRates> extractCurrencyRatesFromJson(String currencyRatesJSON) {
+    private static List<Rates> extractCurrencyRatesFromJson(String json) {
 
-        if (TextUtils.isEmpty(currencyRatesJSON))
+        if (TextUtils.isEmpty(json))
             return null;
 
         String latestDate;
-        List<CurrencyRates> ratesList = new ArrayList<>();
+        List<Rates> ratesList = new ArrayList<>();
 
         try {
-            JSONObject baseJsonResponse = new JSONObject(currencyRatesJSON);
+            JSONObject baseJsonResponse = new JSONObject(json);
             latestDate = baseJsonResponse.getString(JSON_KEY_DATE);
             JSONObject ratesObject = baseJsonResponse.getJSONObject(JSON_KEY_RATES);
             for (Iterator<String> iterator = ratesObject.keys(); iterator.hasNext(); ) {
                 String currencySymbol = iterator.next();
-                double rate = (double) ratesObject.get(currencySymbol);
+                String rate = String.valueOf(ratesObject.get(currencySymbol));
 
-                CurrencyRates currencyRates = new CurrencyRates(R.mipmap.ic_launcher_round, currencySymbol, "currencyName",
-                        "countryName", latestDate, rate);
+                Rates currencyRates = new Rates(R.mipmap.ic_launcher_round, currencySymbol, "Currency Name",
+                        "Country Name", latestDate, rate);
                 ratesList.add(currencyRates);
             }
-
         } catch (JSONException e) {
-            Log.e(LOG_TAG, "Problem parsing the currency rates in JSON", e);
+            Log.e(LOG_TAG, "Problem occurred during parsing the rates", e);
         }
         return ratesList;
     }
@@ -86,7 +86,7 @@ public class QueryUtils {
             }
 
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the currency rates JSON Results", e);
+            Log.e(LOG_TAG, "Problem occurred during making a HTTP request", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -126,15 +126,15 @@ public class QueryUtils {
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Error with creating URL", e);
+            Log.e(LOG_TAG, "Problem occurred during creating URL", e);
             return null;
         }
         return url;
     }
 
-    public static List<CurrencyRates> fetchCurrencyRatesData(String requestUrl) {
+    public static List<Rates> fetchCurrencyRatesData(String requestUrl) {
 
-        Log.i(LOG_TAG, "TEST: fetchCurrencyRatesData() called...");
+        Log.i(LOG_TAG, "fetchCurrencyRatesData() is called");
 
         URL url = createUrl(requestUrl);
 
@@ -142,7 +142,7 @@ public class QueryUtils {
         try {
             jsonResponse = makeHttpRequest(url);
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Error with perform HTTP request to the URL", e);
+            Log.e(LOG_TAG, "Problem occurred during performing HTTP request", e);
         }
         return extractCurrencyRatesFromJson(jsonResponse);
     }

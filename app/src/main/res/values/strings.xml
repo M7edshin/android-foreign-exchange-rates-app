@@ -6,10 +6,6 @@
     <string name="str_no_internet_try_again">No internet connection!</string>
     <string name="str_latest_date">Latest update:</string>
     <string name="str_update_info">All currencies quoted against the euro € (Base). Latest update based on central banks across Europe. The rates are updated daily around 4PM CET.</string>
-    <string name="str_cur_symbol_placeholder">USD</string>
-    <string name="str_cur_name_placeholder">US Dollar</string>
-    <string name="str_country_placeholder">United States</string>
-    <string name="str_rate_placeholder">1.1838</string>
     <string name="str_enter_the_amount">Insert € amount to convert to any available currency in the list</string>
     <string name="str_the_mount_you_wish">Insert € amount you wish to convert</string>
     <string name="str_suggest_report">Suggest or Report</string>
@@ -17,4 +13,5 @@
     <string name="str_updating_the_rates">Updating the rates</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="placeholder">Placeholder</string>
 </resources>
