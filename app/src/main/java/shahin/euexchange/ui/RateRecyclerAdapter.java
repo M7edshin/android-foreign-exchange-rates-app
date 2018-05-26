@@ -17,10 +17,10 @@ import shahin.euexchange.models.Rates;
 
 public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapter.RatesHolder> {
 
-    private List<Rates> rateList;
+    private List<Rates> ratesList;
 
     public RateRecyclerAdapter(List<Rates> rateList) {
-        this.rateList = rateList;
+        this.ratesList = rateList;
     }
 
     @NonNull
@@ -33,7 +33,7 @@ public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull RatesHolder holder, int position) {
 
-        Rates rates = rateList.get(position);
+        Rates rates = ratesList.get(position);
 
         holder.iv_country.setImageResource(rates.getImageId());
         holder.tv_symbol.setText(rates.getSymbol());
@@ -44,7 +44,7 @@ public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return rateList.size();
+        return ratesList.size();
     }
 
 
@@ -64,5 +64,9 @@ public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapte
         }
     }
 
+    public void updateList(List<Rates> list){
+        ratesList = list;
+        notifyDataSetChanged();
+    }
 
 }

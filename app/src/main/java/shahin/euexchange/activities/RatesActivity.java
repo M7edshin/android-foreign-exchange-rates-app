@@ -15,7 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +34,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,15 +43,17 @@ import shahin.euexchange.R;
 import shahin.euexchange.models.Rates;
 import shahin.euexchange.background.CurrencyAsyncTaskLoader;
 import shahin.euexchange.ui.RateRecyclerAdapter;
+import shahin.euexchange.ui.RecyclerViewTouchListener;
 
 import static shahin.euexchange.utilities.Constants.API_ACCESS_KEY;
 import static shahin.euexchange.utilities.Constants.BASE_URL;
 import static shahin.euexchange.utilities.Constants.LOADER_ID;
 import static shahin.euexchange.utilities.Constants.PAR_ACCESS_KEY;
+import static shahin.euexchange.utilities.Constants.setAdditionalContent;
 
 //Created by Mohamed Shahin on 01/08/2017.
 
-public class RatesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Rates>> {
+public class RatesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Rates>>{
 
     public static final String LOG_TAG = RatesActivity.class.getSimpleName();
 
@@ -56,13 +62,18 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
     @BindView(R.id.iv_empty) ImageView iv_empty;
     @BindView(R.id.pb_loading) ProgressBar pb_loading;
     @BindView(R.id.adView) AdView adView;
+    @BindView(R.id.et_search) EditText et_search;
+
 
     private RateRecyclerAdapter rateRecyclerAdapter;
     private LinearLayoutManager linearLayoutManager;
 
     private String latestUpdate;
     private List<Rates> ratesList;
-    private String amount;
+
+    private boolean searchOn;
+
+    private double euroAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,19 +91,61 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
             }
         });
 
+        et_search.setVisibility(View.GONE);
+
         //RecyclerView Setup
         linearLayoutManager = new LinearLayoutManager(this);
         rv_rates.setLayoutManager(linearLayoutManager);
+        rv_rates.setVisibility(View.INVISIBLE);
 
-        //To decide where to save the key below and wrap it in a method
-        MobileAds.initialize(this, "ca-app-pub-1885749404874590~8635369581");
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-
+        pb_loading.setVisibility(View.INVISIBLE);
 
         getLatestRates();
 
+        rv_rates.addOnItemTouchListener(new RecyclerViewTouchListener(this, rv_rates, new RecyclerViewTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Rates rates = ratesList.get(position);
+                double rate = Double.parseDouble(rates.getRate());
+                double result = euroAmount * rate;
+                Toast.makeText(getApplicationContext(), String.valueOf(result), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
     }
+
+    private void filter(String text){
+        List<Rates> temporaryList = new ArrayList<>();
+        for(Rates r: ratesList){
+            if(r.getCurrency().toLowerCase().contains(text.toLowerCase())){
+                temporaryList.add(r);
+            }
+        }
+        rateRecyclerAdapter.updateList(temporaryList);
+        }
+
 
     @Override
     public Loader<List<Rates>> onCreateLoader(int id, Bundle args) {
@@ -105,15 +158,15 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
     public void onLoadFinished(Loader<List<Rates>> loader, List<Rates> rates) {
         Log.i(LOG_TAG, "TEST: onLoadFinished() called...");
 
-        pb_loading.setVisibility(View.GONE);
+        pb_loading.setVisibility(View.INVISIBLE);
 
-        ratesList = rates;
-
-        if (ratesList != null && !ratesList.isEmpty()) {
+        if (rates != null && !rates.isEmpty()) {
+            ratesList = rates;
             latestUpdate = ratesList.get(0).getLatestDate();
             tv_latest_update.setText(latestUpdate);
             rateRecyclerAdapter = new RateRecyclerAdapter(ratesList);
             rv_rates.setAdapter(rateRecyclerAdapter);
+            setAdditionalContent(ratesList);
         }
 
     }
@@ -121,7 +174,6 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
     @Override
     public void onLoaderReset(Loader<List<Rates>> loader) {
         Log.i(LOG_TAG, "TEST: onLoaderReset() called...");
-        new RateRecyclerAdapter(ratesList);
     }
 
     private String buildURL(){
@@ -134,6 +186,8 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
     private void getLatestRates() {
 
         iv_empty.setVisibility(View.INVISIBLE);
+        rv_rates.setVisibility(View.INVISIBLE);
+
         pb_loading.setVisibility(View.VISIBLE);
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -141,13 +195,13 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-
+            iv_empty.setVisibility(View.INVISIBLE);
+            rv_rates.setVisibility(View.VISIBLE);
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(LOADER_ID, null, RatesActivity.this);
-
         } else {
-            pb_loading.setVisibility(View.GONE);
-            new RateRecyclerAdapter(ratesList);
+            pb_loading.setVisibility(View.INVISIBLE);
+            rv_rates.setVisibility(View.INVISIBLE);
             iv_empty.setVisibility(View.VISIBLE);
         }
     }
@@ -166,7 +220,7 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                amount = input.getText().toString();
+                euroAmount = Double.parseDouble(input.getText().toString());
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -198,6 +252,16 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
 
             case R.id.action_report_suggest:
                 sendEmail(getString(R.string.str_suggest_report));
+                return true;
+
+            case R.id.action_search:
+                if(searchOn){
+                    et_search.setVisibility(View.GONE);
+                    searchOn = false;
+                }else{
+                    et_search.setVisibility(View.VISIBLE);
+                    searchOn = true;
+                }
                 return true;
         }
 
