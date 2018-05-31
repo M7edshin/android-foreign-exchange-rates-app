@@ -1,6 +1,7 @@
 package shahin.euexchange.activities;
 
 import android.app.LoaderManager;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +56,7 @@ import static shahin.euexchange.utilities.Constants.setAdditionalContent;
 
 //Created by Mohamed Shahin on 01/08/2017.
 
-public class RatesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Rates>>{
+public class RatesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Rates>>, RateRecyclerAdapter.CurrencyAdapterListener{
 
     public static final String LOG_TAG = RatesActivity.class.getSimpleName();
 
@@ -93,11 +96,16 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
 
         et_search.setVisibility(View.GONE);
 
+        ratesList = new ArrayList<>();
+
         //RecyclerView Setup
         linearLayoutManager = new LinearLayoutManager(this);
         rv_rates.setLayoutManager(linearLayoutManager);
-        rv_rates.setVisibility(View.INVISIBLE);
+        rateRecyclerAdapter = new RateRecyclerAdapter(this, ratesList, this);
+        rv_rates.setAdapter(rateRecyclerAdapter);
 
+
+        rv_rates.setVisibility(View.INVISIBLE);
         pb_loading.setVisibility(View.INVISIBLE);
 
         getLatestRates();
@@ -117,6 +125,7 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
             }
         }));
 
+
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -130,21 +139,12 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
 
             @Override
             public void afterTextChanged(Editable editable) {
-                filter(editable.toString());
+                rateRecyclerAdapter.getFilter().filter(editable);
             }
         });
 
-    }
 
-    private void filter(String text){
-        List<Rates> temporaryList = new ArrayList<>();
-        for(Rates r: ratesList){
-            if(r.getCurrency().toLowerCase().contains(text.toLowerCase())){
-                temporaryList.add(r);
-            }
-        }
-        rateRecyclerAdapter.updateList(temporaryList);
-        }
+    }
 
 
     @Override
@@ -164,7 +164,7 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
             ratesList = rates;
             latestUpdate = ratesList.get(0).getLatestDate();
             tv_latest_update.setText(latestUpdate);
-            rateRecyclerAdapter = new RateRecyclerAdapter(ratesList);
+            rateRecyclerAdapter = new RateRecyclerAdapter(this, ratesList, this);
             rv_rates.setAdapter(rateRecyclerAdapter);
             setAdditionalContent(ratesList);
         }
@@ -255,6 +255,7 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
                 return true;
 
             case R.id.action_search:
+
                 if(searchOn){
                     et_search.setVisibility(View.GONE);
                     searchOn = false;
@@ -262,6 +263,7 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
                     et_search.setVisibility(View.VISIBLE);
                     searchOn = true;
                 }
+
                 return true;
         }
 
@@ -282,4 +284,9 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
         }
     }
 
+
+    @Override
+    public void onCurrencySelected(Rates rates) {
+        Toast.makeText(getApplicationContext(), "Selected: " + rates.getCurrency(), Toast.LENGTH_LONG).show();
+    }
 }
