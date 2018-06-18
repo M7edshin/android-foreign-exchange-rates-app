@@ -1,7 +1,7 @@
 package shahin.euexchange.activities;
 
 import android.app.LoaderManager;
-import android.app.SearchManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,9 +9,9 @@ import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,45 +20,49 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import shahin.euexchange.R;
+import shahin.euexchange.models.Country;
+import shahin.euexchange.models.CountryResponse;
 import shahin.euexchange.models.Rates;
 import shahin.euexchange.background.CurrencyAsyncTaskLoader;
+import shahin.euexchange.networking.ApiRetrofitInterface;
+import shahin.euexchange.networking.RetrofitApiClient;
+import shahin.euexchange.ui.CountryRecyclerAdapter;
 import shahin.euexchange.ui.RateRecyclerAdapter;
 import shahin.euexchange.ui.RecyclerViewTouchListener;
 
 import static shahin.euexchange.utilities.Constants.API_ACCESS_KEY;
 import static shahin.euexchange.utilities.Constants.BASE_URL;
+import static shahin.euexchange.utilities.Constants.INTENT_COUNTRY_KEY;
 import static shahin.euexchange.utilities.Constants.LOADER_ID;
 import static shahin.euexchange.utilities.Constants.PAR_ACCESS_KEY;
 import static shahin.euexchange.utilities.Constants.setAdditionalContent;
 
 //Created by Mohamed Shahin on 01/08/2017.
 
-public class RatesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Rates>>, RateRecyclerAdapter.CurrencyAdapterListener{
+public class RateActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Rates>>, RateRecyclerAdapter.CurrencyAdapterListener{
 
-    public static final String LOG_TAG = RatesActivity.class.getSimpleName();
+    public static final String LOG_TAG = RateActivity.class.getSimpleName();
 
     @BindView(R.id.tv_latest_update) TextView tv_latest_update;
     @BindView(R.id.rv_rates) RecyclerView rv_rates;
@@ -78,10 +82,12 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
 
     private double euroAmount;
 
+    private CountryResponse countryResponse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rates);
+        setContentView(R.layout.activity_rate);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
@@ -93,6 +99,7 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
                 setInputDialog();
             }
         });
+
 
         et_search.setVisibility(View.GONE);
 
@@ -109,19 +116,23 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
         pb_loading.setVisibility(View.INVISIBLE);
 
         getLatestRates();
+        loadCountries();
 
         rv_rates.addOnItemTouchListener(new RecyclerViewTouchListener(this, rv_rates, new RecyclerViewTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Rates rates = ratesList.get(position);
-                double rate = Double.parseDouble(rates.getRate());
-                double result = euroAmount * rate;
-                Toast.makeText(getApplicationContext(), String.valueOf(result), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
-
+                String currency = ratesList.get(position).getSymbol();
+                for(Country country : countryResponse.getCountryList()){
+                    if (country.getCurrencyCode().equalsIgnoreCase(currency)){
+                        Intent intent = new Intent(RateActivity.this, DetailsActivity.class);
+                        intent.putExtra(INTENT_COUNTRY_KEY, country);
+                        startActivity(intent);
+                    }
+                }
             }
         }));
 
@@ -198,7 +209,7 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
             iv_empty.setVisibility(View.INVISIBLE);
             rv_rates.setVisibility(View.VISIBLE);
             LoaderManager loaderManager = getLoaderManager();
-            loaderManager.initLoader(LOADER_ID, null, RatesActivity.this);
+            loaderManager.initLoader(LOADER_ID, null, RateActivity.this);
         } else {
             pb_loading.setVisibility(View.INVISIBLE);
             rv_rates.setVisibility(View.INVISIBLE);
@@ -263,7 +274,10 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
                     et_search.setVisibility(View.VISIBLE);
                     searchOn = true;
                 }
+                return true;
 
+            case R.id.action_country:
+                startActivity(new Intent(RateActivity.this, CountryActivity.class));
                 return true;
         }
 
@@ -280,13 +294,49 @@ public class RatesActivity extends AppCompatActivity implements LoaderManager.Lo
         try {
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(RatesActivity.this, R.string.str_no_emails_clients_installed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(RateActivity.this, R.string.str_no_emails_clients_installed, Toast.LENGTH_SHORT).show();
         }
     }
 
 
     @Override
     public void onCurrencySelected(Rates rates) {
-        Toast.makeText(getApplicationContext(), "Selected: " + rates.getCurrency(), Toast.LENGTH_LONG).show();
+        double rate = Double.parseDouble(rates.getRate());
+        double result = euroAmount * rate;
+        Toast.makeText(getApplicationContext(), String.valueOf(result), Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onCurrencyLongClickListener(Rates rates) {
+
+    }
+
+    /**
+     * Perform network call and load the countries
+     */
+
+    public void loadCountries() {
+        ApiRetrofitInterface apiRetrofitInterface = RetrofitApiClient.getClient().create(ApiRetrofitInterface.class);
+        Call<CountryResponse> call = apiRetrofitInterface.getCountryResponse();
+        call.enqueue(new Callback<CountryResponse>() {
+            @Override
+            public void onResponse(Call<CountryResponse> call, Response<CountryResponse> response) {
+
+                if(response.isSuccessful()){
+                    countryResponse = response.body();
+                }else{
+                    int statusCode = response.code();
+                    Toast.makeText(getApplicationContext(), "Failed " + String.valueOf(statusCode), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CountryResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 }

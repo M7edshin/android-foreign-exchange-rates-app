@@ -10,7 +10,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +78,14 @@ public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapte
                  listener.onCurrencySelected(ratesListFiltered.get(getAdapterPosition()));
                 }
             });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    listener.onCurrencyLongClickListener(ratesListFiltered.get(getAdapterPosition()));
+                    return true;
+                }
+            });
         }
     }
 
@@ -115,5 +122,6 @@ public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapte
 
     public interface CurrencyAdapterListener{
         void onCurrencySelected(Rates rates);
+        void onCurrencyLongClickListener(Rates rates);
     }
 }

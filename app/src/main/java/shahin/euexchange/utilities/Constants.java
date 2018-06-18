@@ -13,8 +13,14 @@ public class Constants {
     public static final String API_ACCESS_KEY = BuildConfig.API_ACCESS_KEY;
     public static final String PAR_ACCESS_KEY = "access_key";
 
-    //RatesActivity
+    //Fabian Country API
+    public static final String COUNTRY_BASE_URL = "http://countryapi.gear.host/";
+
+    //RateActivity
     public static final int LOADER_ID = 1;
+
+    //Country & Details Activity
+    public static final String INTENT_COUNTRY_KEY = "country_key";
 
     public static void setAdditionalContent(List<Rates> ratesList){
         ratesList.get(0).setImageId(R.drawable.aed_united_arab_emirates);

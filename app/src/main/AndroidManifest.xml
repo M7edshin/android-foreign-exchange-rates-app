@@ -13,17 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.RatesActivity"
+            android:name=".activities.RateActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.CountryActivity" />
+        <activity android:name=".activities.DetailsActivity" />
+        <activity android:name=".activities.FavoriteActivity"></activity>
     </application>
 
 </manifest>

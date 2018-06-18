@@ -7,8 +7,8 @@
     android:background="@color/colorWholeApp"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="shahin.euexchange.activities.RatesActivity"
-    tools:showIn="@layout/activity_rates">
+    tools:context="shahin.euexchange.activities.RateActivity"
+    tools:showIn="@layout/activity_rate">
 
 
     <EditText

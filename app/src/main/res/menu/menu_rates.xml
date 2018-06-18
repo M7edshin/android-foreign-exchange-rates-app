@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="shahin.euexchange.activities.RatesActivity">
+    tools:context="shahin.euexchange.activities.RateActivity">
 
     <item
         android:id="@+id/action_refresh_rates"
@@ -17,8 +17,8 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_convert"
-        android:title="Convert"
+        android:id="@+id/action_country"
+        android:title="Country"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
 
