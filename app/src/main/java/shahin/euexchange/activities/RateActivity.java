@@ -24,13 +24,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +70,7 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @BindView(R.id.tv_latest_update) TextView tv_latest_update;
     @BindView(R.id.rv_rates) RecyclerView rv_rates;
-    @BindView(R.id.iv_empty) ImageView iv_empty;
+    @BindView(R.id.iv_welcome) ImageView iv_welcome;
     @BindView(R.id.pb_loading) ProgressBar pb_loading;
     @BindView(R.id.adView) AdView adView;
     @BindView(R.id.et_search) EditText et_search;
@@ -100,6 +104,10 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+        MobileAds.initialize(this, "ca-app-pub-1885749404874590~8635369581");
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         et_search.setVisibility(View.GONE);
 
@@ -196,7 +204,7 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private void getLatestRates() {
 
-        iv_empty.setVisibility(View.INVISIBLE);
+        iv_welcome.setVisibility(View.INVISIBLE);
         rv_rates.setVisibility(View.INVISIBLE);
 
         pb_loading.setVisibility(View.VISIBLE);
@@ -206,14 +214,14 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-            iv_empty.setVisibility(View.INVISIBLE);
+            iv_welcome.setVisibility(View.INVISIBLE);
             rv_rates.setVisibility(View.VISIBLE);
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(LOADER_ID, null, RateActivity.this);
         } else {
             pb_loading.setVisibility(View.INVISIBLE);
             rv_rates.setVisibility(View.INVISIBLE);
-            iv_empty.setVisibility(View.VISIBLE);
+            iv_welcome.setVisibility(View.VISIBLE);
         }
     }
 
@@ -278,6 +286,10 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
 
             case R.id.action_country:
                 startActivity(new Intent(RateActivity.this, CountryActivity.class));
+                return true;
+
+            case R.id.action_favorite:
+                startActivity(new Intent(RateActivity.this, FavoriteActivity.class));
                 return true;
         }
 

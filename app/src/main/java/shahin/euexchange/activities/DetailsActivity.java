@@ -3,11 +3,15 @@ package shahin.euexchange.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import shahin.euexchange.Database.AppDatabase;
+import shahin.euexchange.Database.AppExecutors;
 import shahin.euexchange.R;
 import shahin.euexchange.models.Country;
 
@@ -28,6 +32,9 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.tv_currency_code) TextView tv_currency_code;
     @BindView(R.id.tv_currency_name) TextView tv_currency_name;
     @BindView(R.id.tv_currency_symbol) TextView tv_currency_symbol;
+    @BindView(R.id.btn_favorite) Button btn_favorite;
+
+    private AppDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,30 @@ public class DetailsActivity extends AppCompatActivity {
             tv_alpha2code.setText(country.getAlpha2Code());
             tv_alpha3code.setText(country.getAlpha3Code());
         }
+
+        database = AppDatabase.getInstance(getApplicationContext());
+
+        btn_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = tv_name.getText().toString();
+
+                final Country country = new Country(name,"holder","holder",
+                        "holder","holder","holder",
+                        "holder","holder",
+                        1,"holder",
+                        "holder","holder",
+                        "holder","holder");
+
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        database.countryDao().insertCountry(country);
+                        finish();
+                    }
+                });
+            }
+        });
 
     }
 }

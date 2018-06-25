@@ -1,61 +1,146 @@
 package shahin.euexchange.models;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "country")
 public class Country implements Parcelable{
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     @SerializedName("Name")
     @Expose
     private String name;
+
+    @ColumnInfo(name = "alpha_two_code")
     @SerializedName("Alpha2Code")
     @Expose
     private String alpha2Code;
+
+    @ColumnInfo(name = "alpha_three_code")
     @SerializedName("Alpha3Code")
     @Expose
     private String alpha3Code;
+
+    @ColumnInfo(name = "native_name")
     @SerializedName("NativeName")
     @Expose
     private String nativeName;
+
     @SerializedName("Region")
     @Expose
     private String region;
+
+    @ColumnInfo(name = "sub_region")
     @SerializedName("SubRegion")
     @Expose
     private String subRegion;
+
     @SerializedName("Latitude")
     @Expose
     private String latitude;
+
     @SerializedName("Longitude")
     @Expose
     private String longitude;
+
+    @Ignore
     @SerializedName("Area")
     @Expose
-    private Object area;
+    private Object area;//*************************************************************************************
+
+    @ColumnInfo(name = "numeric_code")
     @SerializedName("NumericCode")
     @Expose
     private Integer numericCode;
+
+    @ColumnInfo(name = "native_language")
     @SerializedName("NativeLanguage")
     @Expose
     private String nativeLanguage;
+
+    @ColumnInfo(name = "currency_code")
     @SerializedName("CurrencyCode")
     @Expose
     private String currencyCode;
+
+    @ColumnInfo(name = "Currency_name")
     @SerializedName("CurrencyName")
     @Expose
     private String currencyName;
+
+    @ColumnInfo(name = "currency_symbol")
     @SerializedName("CurrencySymbol")
     @Expose
     private String currencySymbol;
+
+    @Ignore
     @SerializedName("Flag")
     @Expose
     private String flag;
+
+    @ColumnInfo(name = "flag_png")
     @SerializedName("FlagPng")
     @Expose
     private String flagPng;
+
+    public Country(int id, String name, String alpha2Code, String alpha3Code, String nativeName,
+                   String region, String subRegion, String latitude, String longitude,
+                   Integer numericCode, String nativeLanguage,
+                   String currencyCode, String currencyName, String currencySymbol, String flagPng) {
+        this.id = id;
+        this.name = name;
+        this.alpha2Code = alpha2Code;
+        this.alpha3Code = alpha3Code;
+        this.nativeName = nativeName;
+        this.region = region;
+        this.subRegion = subRegion;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.numericCode = numericCode;
+        this.nativeLanguage = nativeLanguage;
+        this.currencyCode = currencyCode;
+        this.currencyName = currencyName;
+        this.currencySymbol = currencySymbol;
+        this.flagPng = flagPng;
+    }
+
+    @Ignore
+    public Country(String name, String alpha2Code, String alpha3Code, String nativeName,
+                   String region, String subRegion, String latitude, String longitude,
+                   Integer numericCode, String nativeLanguage, String currencyCode,
+                   String currencyName, String currencySymbol, String flagPng) {
+        this.name = name;
+        this.alpha2Code = alpha2Code;
+        this.alpha3Code = alpha3Code;
+        this.nativeName = nativeName;
+        this.region = region;
+        this.subRegion = subRegion;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.numericCode = numericCode;
+        this.nativeLanguage = nativeLanguage;
+        this.currencyCode = currencyCode;
+        this.currencyName = currencyName;
+        this.currencySymbol = currencySymbol;
+        this.flagPng = flagPng;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

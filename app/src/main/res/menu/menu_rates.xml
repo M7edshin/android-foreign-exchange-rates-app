@@ -28,4 +28,10 @@
         android:title="@string/action_report_suggest"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_favorite"
+        android:orderInCategory="100"
+        android:title="Favorite"
+        app:showAsAction="never" />
+
 </menu>
