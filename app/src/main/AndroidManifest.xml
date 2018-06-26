@@ -26,7 +26,6 @@
         <activity android:name=".activities.CountryActivity" />
         <activity android:name=".activities.DetailsActivity" />
         <activity android:name=".activities.FavoriteActivity" />
-        <activity android:name=".activities.FavCountryActivity"></activity>
     </application>
 
 </manifest>

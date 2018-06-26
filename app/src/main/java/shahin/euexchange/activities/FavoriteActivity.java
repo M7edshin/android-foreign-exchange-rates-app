@@ -24,8 +24,9 @@ import shahin.euexchange.models.Country;
 import shahin.euexchange.ui.FavoriteRecyclerAdapter;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
+import static shahin.euexchange.utilities.Constants.INTENT_COUNTRY_KEY;
 
-public class FavoriteActivity extends AppCompatActivity implements FavoriteRecyclerAdapter.ItemClickListener {
+public class FavoriteActivity extends AppCompatActivity implements FavoriteRecyclerAdapter.FavoriteAdapterListener {
 
     @BindView(R.id.rv_favorite) RecyclerView rv_favorite;
 
@@ -70,12 +71,7 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteRecyc
         retrieveCountries();
     }
 
-    @Override
-    public void onItemClickListener(int itemId) {
-        Intent intent = new Intent(this, FavCountryActivity.class);
-        intent.putExtra(FavCountryActivity.EXTRA_COUNTRY_ID, itemId);
-        startActivity(intent);
-    }
+
 
     private void retrieveCountries(){
         FavoriteViewModel viewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
@@ -86,5 +82,17 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteRecyc
                 favoriteRecyclerAdapter.setCountries(countries);
             }
         });
+    }
+
+    @Override
+    public void onCurrencySelected(Country country) {
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra(INTENT_COUNTRY_KEY, country);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onCurrencyLongClickListener(Country country) {
+
     }
 }
