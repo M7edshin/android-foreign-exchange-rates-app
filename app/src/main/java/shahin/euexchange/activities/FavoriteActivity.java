@@ -16,10 +16,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import shahin.euexchange.Database.AppDatabase;
-import shahin.euexchange.Database.AppExecutors;
+import shahin.euexchange.database.AppDatabase;
+import shahin.euexchange.database.AppExecutors;
 import shahin.euexchange.R;
-import shahin.euexchange.ViewModels.FavoriteViewModel;
+import shahin.euexchange.viewmodels.FavoriteViewModel;
 import shahin.euexchange.models.Country;
 import shahin.euexchange.ui.FavoriteRecyclerAdapter;
 

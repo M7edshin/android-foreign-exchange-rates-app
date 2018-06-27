@@ -105,4 +105,10 @@
         android:layout_height="wrap_content"
         android:text="Favorite" />
 
+    <Button
+        android:id="@+id/btn_widget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Widget" />
+
 </LinearLayout>

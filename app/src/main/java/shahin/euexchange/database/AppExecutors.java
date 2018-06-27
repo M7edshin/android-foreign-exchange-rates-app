@@ -1,4 +1,4 @@
-package shahin.euexchange.Database;
+package shahin.euexchange.database;
 
 import android.os.Handler;
 import android.os.Looper;

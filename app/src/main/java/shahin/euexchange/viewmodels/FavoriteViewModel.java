@@ -1,4 +1,4 @@
-package shahin.euexchange.ViewModels;
+package shahin.euexchange.viewmodels;
 
 
 import android.app.Application;
@@ -9,7 +9,7 @@ import android.util.Log;
 
 import java.util.List;
 
-import shahin.euexchange.Database.AppDatabase;
+import shahin.euexchange.database.AppDatabase;
 import shahin.euexchange.models.Country;
 
 public class FavoriteViewModel extends AndroidViewModel {

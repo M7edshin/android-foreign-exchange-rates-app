@@ -1,6 +1,8 @@
 package shahin.euexchange.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,14 +10,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.google.gson.Gson;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import shahin.euexchange.Database.AppDatabase;
-import shahin.euexchange.Database.AppExecutors;
+import shahin.euexchange.database.AppDatabase;
+import shahin.euexchange.database.AppExecutors;
 import shahin.euexchange.R;
 import shahin.euexchange.models.Country;
+import shahin.euexchange.widget.CountryWidgetProvider;
 
 import static shahin.euexchange.utilities.Constants.INTENT_COUNTRY_KEY;
+import static shahin.euexchange.utilities.Constants.WIDGET_SHARED_PREFS_KEY;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -33,6 +39,7 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.tv_currency_name) TextView tv_currency_name;
     @BindView(R.id.tv_currency_symbol) TextView tv_currency_symbol;
     @BindView(R.id.btn_favorite) Button btn_favorite;
+    @BindView(R.id.btn_widget) Button btn_widget;
 
     private AppDatabase database;
 
@@ -75,5 +82,12 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+        btn_widget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
+
 }

@@ -26,6 +26,17 @@
         <activity android:name=".activities.CountryActivity" />
         <activity android:name=".activities.DetailsActivity" />
         <activity android:name=".activities.FavoriteActivity" />
+
+        <receiver android:name=".widget.CountryWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/country_widget_provider_info" />
+        </receiver>
+
     </application>
 
 </manifest>

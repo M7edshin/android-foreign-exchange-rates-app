@@ -1,4 +1,4 @@
-package shahin.euexchange.Database;
+package shahin.euexchange.database;
 
 
 import android.arch.persistence.room.Database;

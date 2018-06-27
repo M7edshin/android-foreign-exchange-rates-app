@@ -22,6 +22,9 @@ public class Constants {
     //Country & Details Activity
     public static final String INTENT_COUNTRY_KEY = "country_key";
 
+    //Widget
+    public static final String WIDGET_SHARED_PREFS_KEY = "shared_pref_key";
+
     public static void setAdditionalContent(List<Rates> ratesList){
         ratesList.get(0).setImageId(R.drawable.aed_united_arab_emirates);
         ratesList.get(0).setCountry("United Arab Emirates");
