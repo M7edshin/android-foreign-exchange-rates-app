@@ -12,13 +12,16 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import shahin.euexchange.database.AppDatabase;
 import shahin.euexchange.database.AppExecutors;
 import shahin.euexchange.R;
 import shahin.euexchange.models.Country;
-import shahin.euexchange.widget.CountryWidgetProvider;
+import shahin.euexchange.widget.MyWidgetProvider;
+import shahin.euexchange.widget.WidgetObject;
 
 import static shahin.euexchange.utilities.Constants.INTENT_COUNTRY_KEY;
 import static shahin.euexchange.utilities.Constants.WIDGET_SHARED_PREFS_KEY;
@@ -85,9 +88,29 @@ public class DetailsActivity extends AppCompatActivity {
         btn_widget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                makeData();
+                sendBroadcast();
             }
         });
     }
 
+    private void makeData() {
+        ArrayList<WidgetObject> widgetObjects = new ArrayList<>();
+        widgetObjects.add(new WidgetObject(tv_name.getText().toString()));
+        widgetObjects.add(new WidgetObject(tv_name.getText().toString()));
+        widgetObjects.add(new WidgetObject(tv_name.getText().toString()));
+        Gson gson = new Gson();
+        String json = gson.toJson(widgetObjects);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(WIDGET_SHARED_PREFS_KEY, json).commit();
+    }
+
+    private void sendBroadcast() {
+
+        Intent intent = new Intent(this, MyWidgetProvider.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE\"");
+        sendBroadcast(intent);
+    }
 }
