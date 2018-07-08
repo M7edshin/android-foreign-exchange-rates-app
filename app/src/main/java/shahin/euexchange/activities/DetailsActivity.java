@@ -1,18 +1,42 @@
 package shahin.euexchange.activities;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,28 +47,57 @@ import shahin.euexchange.models.Country;
 import shahin.euexchange.widget.MyWidgetProvider;
 import shahin.euexchange.widget.WidgetObject;
 
+import static shahin.euexchange.utilities.Constants.AD_ID;
 import static shahin.euexchange.utilities.Constants.INTENT_COUNTRY_KEY;
 import static shahin.euexchange.utilities.Constants.WIDGET_SHARED_PREFS_KEY;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.tv_name) TextView tv_name;
-    @BindView(R.id.tv_alpha2code) TextView tv_alpha2code;
-    @BindView(R.id.tv_alpha3code) TextView tv_alpha3code;
-    @BindView(R.id.tv_native_name) TextView tv_native_name;
-    @BindView(R.id.tv_region) TextView tv_region;
-    @BindView(R.id.tv_sub_region) TextView tv_sub_region;
-    @BindView(R.id.tv_latitude) TextView tv_latitude;
-    @BindView(R.id.tv_longitude) TextView tv_longitude;
-    @BindView(R.id.tv_numeric_code) TextView tv_numeric_code;
-    @BindView(R.id.tv_native_language) TextView tv_native_language;
-    @BindView(R.id.tv_currency_code) TextView tv_currency_code;
-    @BindView(R.id.tv_currency_name) TextView tv_currency_name;
-    @BindView(R.id.tv_currency_symbol) TextView tv_currency_symbol;
-    @BindView(R.id.btn_favorite) Button btn_favorite;
-    @BindView(R.id.btn_widget) Button btn_widget;
+    @BindView(R.id.iv_flag)
+    ImageView iv_flag;
+    @BindView(R.id.tv_alpha2code)
+    TextView tv_alpha2code;
+    @BindView(R.id.tv_alpha3code)
+    TextView tv_alpha3code;
+    @BindView(R.id.tv_native_name)
+    TextView tv_native_name;
+    @BindView(R.id.tv_region)
+    TextView tv_region;
+    @BindView(R.id.tv_sub_region)
+    TextView tv_sub_region;
+    @BindView(R.id.tv_numeric_code)
+    TextView tv_numeric_code;
+    @BindView(R.id.tv_native_language)
+    TextView tv_native_language;
+    @BindView(R.id.tv_currency_code)
+    TextView tv_currency_code;
+    @BindView(R.id.tv_currency_name)
+    TextView tv_currency_name;
+    @BindView(R.id.tv_currency_symbol)
+    TextView tv_currency_symbol;
+    @BindView(R.id.adView)
+    AdView adView;
+
 
     private AppDatabase database;
+
+    private String name;
+    private String alpha2code;
+    private String alpha3code;
+    private String nativeName;
+    private String region;
+    private String subRegion;
+    private String latitude;
+    private String longitude;
+    private int numericCode;
+    private String nativeLanguage;
+    private String currencyCode;
+    private String currencyName;
+    private String currencySymbol;
+    private String flagPNG;
+
+    private Country country;
+    private Country countryNameFromDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,53 +105,65 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
 
+        MobileAds.initialize(this, AD_ID);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
         Intent intentStartedThisActivity = getIntent();
 
-        if(intentStartedThisActivity.hasExtra(INTENT_COUNTRY_KEY)){
-            Country country = intentStartedThisActivity.getParcelableExtra(INTENT_COUNTRY_KEY);
-            tv_name.setText(country.getName());
-            tv_alpha2code.setText(country.getAlpha2Code());
-            tv_alpha3code.setText(country.getAlpha3Code());
+        if (intentStartedThisActivity.hasExtra(INTENT_COUNTRY_KEY)) {
+            country = intentStartedThisActivity.getParcelableExtra(INTENT_COUNTRY_KEY);
+
+            name = country.getName();
+            alpha2code = country.getAlpha2Code();
+            alpha3code = country.getAlpha3Code();
+            nativeName = country.getNativeName();
+            region = country.getRegion();
+            subRegion = country.getSubRegion();
+            latitude = country.getLatitude();
+            longitude = country.getLongitude();
+            numericCode = country.getNumericCode();
+            nativeLanguage = country.getNativeLanguage();
+            currencyCode = country.getCurrencyCode();
+            currencyName = country.getCurrencyName();
+            currencySymbol = country.getCurrencySymbol();
+            flagPNG = country.getFlagPng();
+
+            tv_alpha2code.setText("Alpha-2 code: " + alpha2code);
+            tv_alpha3code.setText("Alpha-3 code: " + alpha3code);
+            tv_native_name.setText(nativeName);
+            tv_region.setText("Region: " + region);
+            tv_sub_region.setText(subRegion);
+            tv_numeric_code.setText("Country Code: " + String.valueOf(numericCode));
+            tv_native_language.setText("Lang: " +  nativeLanguage);
+            tv_currency_code.setText("Code: " + currencyCode);
+            tv_currency_name.setText(currencyName);
+            tv_currency_symbol.setText("Symbol: " + currencySymbol);
+
+            Picasso.get()
+                    .load(country.getFlagPng())
+                    .placeholder(R.drawable.ic_not_applicable)
+                    .error(R.drawable.ic_not_applicable)
+                    .into(iv_flag);
+
+            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+            intent.putExtra("Latitude", latitude);
+            intent.putExtra("Longitude", longitude);
+            intent.putExtra("Country", name);
         }
 
         database = AppDatabase.getInstance(getApplicationContext());
 
-        btn_favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = tv_name.getText().toString();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(name);
 
-                final Country country = new Country(name,"holder","holder",
-                        "holder","holder","holder",
-                        "holder","holder",
-                        1,"holder",
-                        "holder","holder",
-                        "holder","holder");
-
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        database.countryDao().insertCountry(country);
-                        finish();
-                    }
-                });
-            }
-        });
-
-        btn_widget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                makeData();
-                sendBroadcast();
-            }
-        });
     }
 
     private void makeData() {
         ArrayList<WidgetObject> widgetObjects = new ArrayList<>();
-        widgetObjects.add(new WidgetObject(tv_name.getText().toString()));
-        widgetObjects.add(new WidgetObject(tv_name.getText().toString()));
-        widgetObjects.add(new WidgetObject(tv_name.getText().toString()));
+        widgetObjects.add(new WidgetObject(name));
+        widgetObjects.add(new WidgetObject(currencyName));
+        widgetObjects.add(new WidgetObject(currencySymbol));
         Gson gson = new Gson();
         String json = gson.toJson(widgetObjects);
 
@@ -113,4 +178,58 @@ public class DetailsActivity extends AppCompatActivity {
         intent.setAction("android.appwidget.action.APPWIDGET_UPDATE\"");
         sendBroadcast(intent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_details, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_favorite_it:
+
+                final Country country = new Country(name, alpha2code, alpha3code,
+                        nativeName, region, subRegion,
+                        latitude, longitude,
+                        numericCode, nativeLanguage,
+                        currencyCode, currencyName,
+                        currencySymbol, flagPNG);
+
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        database.countryDao().insertCountry(country);
+                        finish();
+                    }
+                });
+                snackBarShort(getString(R.string.added_to_favorite));
+
+                return true;
+
+            case R.id.action_widget_it:
+                makeData();
+                sendBroadcast();
+                Toast.makeText(getApplicationContext(), R.string.widget_it, Toast.LENGTH_SHORT).show();
+                snackBarShort(getString(R.string.widget_it));
+                return true;
+
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void snackBarShort(String message){
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT);
+        snackbar.show();
+    }
+
 }
+

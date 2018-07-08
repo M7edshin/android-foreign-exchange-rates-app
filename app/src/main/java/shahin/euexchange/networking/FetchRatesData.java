@@ -136,6 +136,12 @@ public class FetchRatesData {
 
         Log.i(LOG_TAG, "fetchCurrencyRatesData() is called");
 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         URL url = createUrl(requestUrl);
 
         String jsonResponse = "";

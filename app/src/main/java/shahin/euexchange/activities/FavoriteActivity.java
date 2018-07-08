@@ -1,8 +1,10 @@
 package shahin.euexchange.activities;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.location.GnssNavigationMessage;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.List;
 
@@ -24,11 +33,13 @@ import shahin.euexchange.models.Country;
 import shahin.euexchange.ui.FavoriteRecyclerAdapter;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
+import static shahin.euexchange.utilities.Constants.AD_ID;
 import static shahin.euexchange.utilities.Constants.INTENT_COUNTRY_KEY;
 
 public class FavoriteActivity extends AppCompatActivity implements FavoriteRecyclerAdapter.FavoriteAdapterListener {
 
     @BindView(R.id.rv_favorite) RecyclerView rv_favorite;
+    @BindView(R.id.adView) AdView adView;
 
     private final String TAG = FavoriteActivity.class.getSimpleName();
     private FavoriteRecyclerAdapter favoriteRecyclerAdapter;
@@ -39,6 +50,12 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteRecyc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
         ButterKnife.bind(this);
+
+        MobileAds.initialize(this, AD_ID);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
+        rv_favorite.setVisibility(View.VISIBLE);
 
         rv_favorite.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration decoration = new DividerItemDecoration(getApplicationContext(), VERTICAL);
@@ -59,7 +76,7 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteRecyc
                     public void run() {
                         int position = viewHolder.getAdapterPosition();
                         List<Country> countryList = favoriteRecyclerAdapter.getCountryList();
-                        database.countryDao().deletCountry(countryList.get(position));
+                        database.countryDao().deleteCountry(countryList.get(position));
                     }
                 });
 
@@ -95,4 +112,15 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteRecyc
     public void onCurrencyLongClickListener(Country country) {
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+        }
+        return true;
+    }
+
 }

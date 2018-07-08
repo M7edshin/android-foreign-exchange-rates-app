@@ -1,7 +1,6 @@
 package shahin.euexchange.activities;
 
 import android.app.LoaderManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,11 +8,15 @@ import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,8 +27,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -38,6 +39,7 @@ import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,15 +53,19 @@ import shahin.euexchange.models.Rates;
 import shahin.euexchange.background.CurrencyAsyncTaskLoader;
 import shahin.euexchange.networking.ApiRetrofitInterface;
 import shahin.euexchange.networking.RetrofitApiClient;
-import shahin.euexchange.ui.CountryRecyclerAdapter;
 import shahin.euexchange.ui.RateRecyclerAdapter;
 import shahin.euexchange.ui.RecyclerViewTouchListener;
 
+import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
+import static shahin.euexchange.utilities.Constants.AD_ID;
+import static shahin.euexchange.utilities.Constants.AMOUNT_STATE_KEY;
 import static shahin.euexchange.utilities.Constants.API_ACCESS_KEY;
 import static shahin.euexchange.utilities.Constants.BASE_URL;
 import static shahin.euexchange.utilities.Constants.INTENT_COUNTRY_KEY;
+import static shahin.euexchange.utilities.Constants.LAYOUT_MANAGER_STATE_KEY;
 import static shahin.euexchange.utilities.Constants.LOADER_ID;
 import static shahin.euexchange.utilities.Constants.PAR_ACCESS_KEY;
+import static shahin.euexchange.utilities.Constants.SEARCH_ON_STATE_KEY;
 import static shahin.euexchange.utilities.Constants.setAdditionalContent;
 
 //Created by Mohamed Shahin on 01/08/2017.
@@ -82,11 +88,13 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
     private String latestUpdate;
     private List<Rates> ratesList;
 
-    private boolean searchOn;
+    private boolean searchOn = false;
 
     private double euroAmount;
 
     private CountryResponse countryResponse;
+
+    private Parcelable layoutManagerState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,45 +112,25 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        MobileAds.initialize(this, "ca-app-pub-1885749404874590~8635369581");
-        AdView mAdView = findViewById(R.id.adView);
+        MobileAds.initialize(this, AD_ID);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        adView.loadAd(adRequest);
 
-        et_search.setVisibility(View.GONE);
 
         ratesList = new ArrayList<>();
 
         //RecyclerView Setup
         linearLayoutManager = new LinearLayoutManager(this);
         rv_rates.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration decoration = new DividerItemDecoration(getApplicationContext(), VERTICAL);
+        rv_rates.addItemDecoration(decoration);
         rateRecyclerAdapter = new RateRecyclerAdapter(this, ratesList, this);
         rv_rates.setAdapter(rateRecyclerAdapter);
 
 
         rv_rates.setVisibility(View.INVISIBLE);
         pb_loading.setVisibility(View.INVISIBLE);
-
-        getLatestRates();
-        loadCountries();
-
-        rv_rates.addOnItemTouchListener(new RecyclerViewTouchListener(this, rv_rates, new RecyclerViewTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                String currency = ratesList.get(position).getSymbol();
-                for(Country country : countryResponse.getCountryList()){
-                    if (country.getCurrencyCode().equalsIgnoreCase(currency)){
-                        Intent intent = new Intent(RateActivity.this, DetailsActivity.class);
-                        intent.putExtra(INTENT_COUNTRY_KEY, country);
-                        startActivity(intent);
-                    }
-                }
-            }
-        }));
+        et_search.setVisibility(View.GONE);
 
 
         et_search.addTextChangedListener(new TextWatcher() {
@@ -162,6 +150,8 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+        getLatestRates();
+        loadCountries();
 
     }
 
@@ -185,6 +175,7 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
             tv_latest_update.setText(latestUpdate);
             rateRecyclerAdapter = new RateRecyclerAdapter(this, ratesList, this);
             rv_rates.setAdapter(rateRecyclerAdapter);
+            linearLayoutManager.onRestoreInstanceState(layoutManagerState);
             setAdditionalContent(ratesList);
         }
 
@@ -222,6 +213,8 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
             pb_loading.setVisibility(View.INVISIBLE);
             rv_rates.setVisibility(View.INVISIBLE);
             iv_welcome.setVisibility(View.VISIBLE);
+            snackBarIndefinite(getString(R.string.fail_message), getString(R.string.connect_refresh), getString(R.string.done));
+            tv_latest_update.setText(R.string.not_applicable);
         }
     }
 
@@ -229,13 +222,10 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.str_the_mount_you_wish);
 
-        // Set up the input
         final EditText input = new EditText(this);
-        // Specify the type of input expected
         input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         builder.setView(input);
 
-        // Set up the buttons
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -288,7 +278,7 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(new Intent(RateActivity.this, CountryActivity.class));
                 return true;
 
-            case R.id.action_favorite:
+            case R.id.action_favorite_list:
                 startActivity(new Intent(RateActivity.this, FavoriteActivity.class));
                 return true;
         }
@@ -315,12 +305,22 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onCurrencySelected(Rates rates) {
         double rate = Double.parseDouble(rates.getRate());
         double result = euroAmount * rate;
-        Toast.makeText(getApplicationContext(), String.valueOf(result), Toast.LENGTH_SHORT).show();
+        String roundedResult = String.format(Locale.ENGLISH, "%.2f", result);
+        Toast.makeText(getApplicationContext(), roundedResult + " " + rates.getSymbol(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onCurrencyLongClickListener(Rates rates) {
-
+        String currency = rates.getSymbol();
+        for(Country country : countryResponse.getCountryList()){
+            if (country.getCurrencyCode().equalsIgnoreCase(currency)){
+                Intent intent = new Intent(RateActivity.this, DetailsActivity.class);
+                intent.putExtra(INTENT_COUNTRY_KEY, country);
+                startActivity(intent);
+                break;
+            }
+        }
+        snackBarShort(getString(R.string.not_available_as_country));
     }
 
     /**
@@ -338,17 +338,61 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
                     countryResponse = response.body();
                 }else{
                     int statusCode = response.code();
-                    Toast.makeText(getApplicationContext(), "Failed " + String.valueOf(statusCode), Toast.LENGTH_SHORT).show();
+                    snackBarShort(getString(R.string.temp_message) + " " + String.valueOf(statusCode));
                 }
 
             }
 
             @Override
             public void onFailure(Call<CountryResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                snackBarIndefinite(getString(R.string.fail_message), getString(R.string.connect_refresh), getString(R.string.done));
             }
         });
     }
 
+    private void snackBarIndefinite(String message, String action, final String actionMessage){
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE)
+                .setAction(action, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Snackbar.make(findViewById(android.R.id.content), actionMessage, Snackbar.LENGTH_SHORT);
+                        getLatestRates();
+                        loadCountries();
+                    }
+                });
+
+        snackbar.show();
+    }
+
+    private void snackBarShort(String message){
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT);
+        snackbar.show();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+        if (linearLayoutManager != null) {
+                layoutManagerState = linearLayoutManager.onSaveInstanceState();
+                outState.putParcelable(LAYOUT_MANAGER_STATE_KEY, layoutManagerState);
+        }
+        outState.putBoolean(SEARCH_ON_STATE_KEY, searchOn);
+        outState.putDouble(AMOUNT_STATE_KEY, euroAmount);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        searchOn = savedInstanceState.getBoolean(SEARCH_ON_STATE_KEY);
+        if(searchOn){
+            et_search.setVisibility(View.VISIBLE);
+        }else {
+            et_search.setVisibility(View.GONE);
+        }
+        euroAmount = savedInstanceState.getDouble(AMOUNT_STATE_KEY);
+    }
 
 }

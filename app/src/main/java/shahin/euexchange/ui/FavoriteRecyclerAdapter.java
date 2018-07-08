@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -30,7 +31,6 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
 
     @Override
     public CountryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Inflate the task_layout to a view
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.favorite_country_recycler_item, parent, false);
 
@@ -45,9 +45,10 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
         String countryName = country.getName();
         holder.tv_country_name.setText(countryName);
 
-        Glide.with(holder.iv_country_flag.getContext())
+        Picasso.get()
                 .load(country.getFlagPng())
-                //.error()************************************************************************************************************
+                .placeholder(R.drawable.ic_not_applicable)
+                .error(R.drawable.ic_not_applicable)
                 .into(holder.iv_country_flag);
     }
 
@@ -78,8 +79,8 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
         public CountryViewHolder(View itemView) {
             super(itemView);
 
-            iv_country_flag = itemView.findViewById(R.id.iv_country_flag);
-            tv_country_name = itemView.findViewById(R.id.tv_country_name);
+            iv_country_flag = itemView.findViewById(R.id.iv_fav_country_flag);
+            tv_country_name = itemView.findViewById(R.id.tv_fav_country_name);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -25,6 +25,16 @@ public class Constants {
     //Widget
     public static final String WIDGET_SHARED_PREFS_KEY = "shared_pref_key";
 
+    //Saving state
+    public static final String LAYOUT_MANAGER_STATE_KEY = "layout_manager_state";
+    public static final String SEARCH_ON_STATE_KEY = "search_on_state";
+    public static final String AMOUNT_STATE_KEY = "amount_state";
+
+    //Ad
+    public static final String AD_ID = "ca-app-pub-1885749404874590~8635369581";
+
+    public static final String MAP_INTENT_KEY = "map_intent_key";
+
     public static void setAdditionalContent(List<Rates> ratesList){
         ratesList.get(0).setImageId(R.drawable.aed_united_arab_emirates);
         ratesList.get(0).setCountry("United Arab Emirates");
@@ -110,7 +120,7 @@ public class Constants {
         ratesList.get(20).setCountry("Bahamas");
         ratesList.get(20).setCurrency("Bahamian Dollar");
 
-        //ratesList.get(21).setImageId(R.drawable.); >> Bitocn
+        ratesList.get(21).setImageId(R.drawable.bitcoin);
         ratesList.get(21).setCountry("Virtual Currency (WorldWide)");
         ratesList.get(21).setCurrency("Bitcoin");
 
@@ -210,7 +220,7 @@ public class Constants {
         ratesList.get(45).setCountry("Ethiopia");
         ratesList.get(45).setCurrency("Ethiopian Birr");
 
-        //ratesList.get(21).setImageId(R.drawable.); >> EURO
+        ratesList.get(21).setImageId(R.mipmap.ic_launcher);
         ratesList.get(46).setCountry("Akrotiri and Dhekelia, Andorra, Austria, Belgium, Cyprus, " +
                 "Estonia, Finland, France, Germany, Greece, Ireland, Italy, Kosovo, Latvia, Lithuania" +
                 "Luxembourg, Malta, Monaco, Montenegro, Netherlands, Portugal, San-Marino, Slovakia" +
@@ -258,7 +268,7 @@ public class Constants {
         ratesList.get(56).setCountry("Guatemala");
         ratesList.get(56).setCurrency("Guatemalan Quetzal");
 
-        //ratesList.get(57).setImageId(R.drawable.); No flag
+        ratesList.get(57).setImageId(R.mipmap.ic_launcher);
         ratesList.get(57).setCountry("British Guiana");
         ratesList.get(57).setCurrency("Guyanaese Dollar");
 
@@ -286,10 +296,9 @@ public class Constants {
         ratesList.get(63).setCountry("Indonesia");
         ratesList.get(63).setCurrency("Indonesian Rupiah");
 
-        //Israel Delete it
-        //ratesList.get(64).setImageId(R.drawable.);
-        //ratesList.get(64).setCountry(" ");
-        //ratesList.get(64).setCurrency(" ");
+        //ratesList.get(64).setImageId(R.drawable.); NO FLAG
+        ratesList.get(64).setCountry("Israel");
+        ratesList.get(64).setCurrency("Shekel");
 
         ratesList.get(65).setImageId(R.drawable.imp_isle_of_man);
         ratesList.get(65).setCountry("Isle of man");
@@ -326,9 +335,6 @@ public class Constants {
         ratesList.get(73).setImageId(R.drawable.jpy_japan);
         ratesList.get(73).setCountry("Japan");
         ratesList.get(73).setCurrency("Japanese Yen");
-
-        //________________________________________________________
-
 
         ratesList.get(74).setImageId(R.drawable.kes_kenya);
         ratesList.get(74).setCountry("Kenya");
@@ -529,7 +535,6 @@ public class Constants {
         ratesList.get(123).setImageId(R.drawable.rwf_rwanda);
         ratesList.get(123).setCountry("Rwanda");
         ratesList.get(123).setCurrency("Rwanda Franc");
-
 
         ratesList.get(124).setImageId(R.drawable.sar_saudi_arabia);
         ratesList.get(124).setCountry("Saudi Arabia");

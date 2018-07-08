@@ -1,8 +1,10 @@
 package shahin.euexchange.activities;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -14,9 +16,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,8 +33,10 @@ import shahin.euexchange.models.Country;
 import shahin.euexchange.models.CountryResponse;
 import shahin.euexchange.networking.ApiRetrofitInterface;
 import shahin.euexchange.networking.RetrofitApiClient;
+import shahin.euexchange.ui.ColumnsFitting;
 import shahin.euexchange.ui.CountryRecyclerAdapter;
 
+import static shahin.euexchange.utilities.Constants.AD_ID;
 import static shahin.euexchange.utilities.Constants.INTENT_COUNTRY_KEY;
 
 public class CountryActivity extends AppCompatActivity implements CountryRecyclerAdapter.CurrencyAdapterListener{
@@ -43,7 +50,9 @@ public class CountryActivity extends AppCompatActivity implements CountryRecycle
     @BindView(R.id.et_search) EditText et_search;
 
     private CountryRecyclerAdapter countryRecyclerAdapter;
-    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager layoutManager;
+
+    private List<Country> countryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +60,18 @@ public class CountryActivity extends AppCompatActivity implements CountryRecycle
         setContentView(R.layout.activity_country);
         ButterKnife.bind(this);
 
-        linearLayoutManager = new LinearLayoutManager(this);
-        rv_countries.setLayoutManager(linearLayoutManager);
+        MobileAds.initialize(this, AD_ID);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
-        loadCountries();
+        int numberOfColumns = ColumnsFitting.calculateNoOfColumns(this);
+        layoutManager = new GridLayoutManager(this, numberOfColumns);
+        rv_countries.setLayoutManager(layoutManager);
+
+        pb_loading.setVisibility(View.VISIBLE);
+        iv_empty.setVisibility(View.GONE);
+
+        countryRecyclerAdapter = new CountryRecyclerAdapter(this, countryList, this);
 
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -69,9 +86,11 @@ public class CountryActivity extends AppCompatActivity implements CountryRecycle
 
             @Override
             public void afterTextChanged(Editable editable) {
-                countryRecyclerAdapter.getFilter().filter(editable);
+                    countryRecyclerAdapter.getFilter().filter(editable);
             }
         });
+
+        loadCountries();
     }
 
     /**
@@ -86,20 +105,23 @@ public class CountryActivity extends AppCompatActivity implements CountryRecycle
             public void onResponse(Call<CountryResponse> call, Response<CountryResponse> response) {
 
                 if(response.isSuccessful()){
-                    countryRecyclerAdapter = new CountryRecyclerAdapter(CountryActivity.this, response.body().getCountryList(),CountryActivity.this);
+                    countryList = response.body().getCountryList();
+                    countryRecyclerAdapter = new CountryRecyclerAdapter(CountryActivity.this, countryList ,CountryActivity.this);
                     rv_countries.setAdapter(countryRecyclerAdapter);
                     pb_loading.setVisibility(View.GONE);
                     iv_empty.setVisibility(View.GONE);
                 }else{
                     int statusCode = response.code();
-                    Toast.makeText(getApplicationContext(), "Failed " + String.valueOf(statusCode), Toast.LENGTH_SHORT).show();
+                    snackBarShort(getString(R.string.temp_message) + " " + String.valueOf(statusCode));
                 }
 
             }
 
             @Override
             public void onFailure(Call<CountryResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                snackBarIndefinite(getString(R.string.fail_message), getString(R.string.connect_refresh), getString(R.string.done));
+                pb_loading.setVisibility(View.INVISIBLE);
+                iv_empty.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -113,6 +135,26 @@ public class CountryActivity extends AppCompatActivity implements CountryRecycle
 
     @Override
     public void onCurrencyLongClickListener(Country country) {
+        snackBarShort(country.getNativeName());
+    }
 
+    private void snackBarIndefinite(String message, String action, final String actionMessage){
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE)
+                .setAction(action, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Snackbar.make(findViewById(android.R.id.content), actionMessage, Snackbar.LENGTH_SHORT);
+                        loadCountries();
+                    }
+                });
+
+        snackbar.show();
+    }
+
+    private void snackBarShort(String message){
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT);
+        snackbar.show();
     }
 }

@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +45,12 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
 
         Country country = countryListFiltered.get(position);
 
-        holder.tv_name.setText(country.getName());
-        holder.tv_currency.setText(country.getCurrencyName());
+
+        Picasso.get()
+                .load(country.getFlagPng())
+                .placeholder(R.drawable.ic_not_applicable)
+                .error(R.drawable.ic_not_applicable)
+                .into(holder.iv_c_flag);
 
     }
 
@@ -55,13 +62,14 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
 
     public class CountryHolder extends RecyclerView.ViewHolder {
 
-        private TextView tv_currency;
-        private TextView tv_name;
+        private ImageView iv_c_flag;
+        private TextView tv_c_name;
+        private TextView tv_c_native_name;
+
 
         public CountryHolder(View itemView) {
             super(itemView);
-            tv_currency = itemView.findViewById(R.id.tv_currency);
-            tv_name = itemView.findViewById(R.id.tv_name);
+            iv_c_flag = itemView.findViewById(R.id.iv_c_flag);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -116,8 +124,5 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
         void onCurrencyLongClickListener(Country country);
     }
 
-    //public void updateCountry(List<Country> countryList) {
-      //  this.countryListFiltered = countryList;
-        //notifyDataSetChanged();
-    //}
+
 }

@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    android:id="@+id/linear_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="shahin.euexchange.activities.RateActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWholeApp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    tools:showIn="@layout/activity_rate"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="shahin.euexchange.activities.RateActivity"
-    tools:showIn="@layout/activity_rate">
+    android:background="@color/colorWhite">
 
+    <TextView
+        android:id="@+id/tv_latest_update"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        style="@style/MainTextViewStyle"/>
 
     <EditText
         android:id="@+id/et_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tv_latest_update"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="@string/str_latest_date" />
+        android:inputType="text"
+        android:hint="@string/search_by_country_e_g_united_state"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +33,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_rates"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            style="@style/RecyclerViewStyle"/>
 
         <ImageView
             android:id="@+id/iv_welcome"
@@ -54,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-1885749404874590/3646110245" />
+        ads:adUnitId="ca-app-pub-1885749404874590/3646110245"
+        android:background="@color/colorPrimary"/>
 
 </LinearLayout>

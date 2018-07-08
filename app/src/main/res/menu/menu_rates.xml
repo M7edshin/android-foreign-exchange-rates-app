@@ -4,34 +4,38 @@
     tools:context="shahin.euexchange.activities.RateActivity">
 
     <item
-        android:id="@+id/action_refresh_rates"
-        android:icon="@drawable/ic_cloud_download_black_24dp"
-        android:orderInCategory="100"
-        android:title="@string/action_refresh_rates"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/action_search"
-        android:title="Search"
+        android:title="@string/search"
+        android:icon="@drawable/ic_action_search"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_country"
-        android:title="Country"
+        android:title="@string/countries"
+        android:icon="@drawable/ic_action_countries"
         android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_favorite_list"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_fav"
+        android:title="@string/favorites"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_report_suggest"
         android:orderInCategory="100"
-        android:title="@string/action_report_suggest"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_email_us"
+        android:title="@string/str_suggest_report"
+        app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_favorite"
+        android:id="@+id/action_refresh_rates"
+        android:icon="@drawable/ic_cloud_download_black_24dp"
         android:orderInCategory="100"
-        android:title="Favorite"
-        app:showAsAction="never" />
+        android:title="@string/action_refresh_rates"
+        app:showAsAction="ifRoom" />
 
 </menu>

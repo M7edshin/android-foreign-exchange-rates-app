@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import shahin.euexchange.R;
 import shahin.euexchange.models.Rates;
@@ -48,7 +49,10 @@ public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapte
         holder.iv_country.setImageResource(rates.getImageId());
         holder.tv_symbol.setText(rates.getSymbol());
         holder.tv_currency.setText(rates.getCurrency());
-        holder.tv_rate.setText(rates.getRate());
+
+        double rate = Double.parseDouble(rates.getRate());
+        String roundedRate = String.format(Locale.ENGLISH, "%.2f", rate);
+        holder.tv_rate.setText(roundedRate);
 
     }
 
@@ -100,7 +104,8 @@ public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapte
                 } else {
                     List<Rates> filteredList = new ArrayList<>();
                     for(Rates r: ratesList){
-                        if (r.getCurrency().toLowerCase().contains(charString.toLowerCase())|| r.getCountry().toLowerCase().contains(charSequence)) {
+                        if (r.getCountry().toLowerCase().contains(charString.toLowerCase())
+                                || r.getSymbol().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(r);
                         }
                     }
