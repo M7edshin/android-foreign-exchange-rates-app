@@ -32,4 +32,17 @@
     <string name="widget_it">Widget it :)</string>
     <string name="added_to_favorite">Added to Favorites :)</string>
     <string name="currency_details">Currency Details</string>
+    <string name="no_connection_image">No Connection Image</string>
+    <string name="a_flag">A flag</string>
+    <string name="welcome_image">Welcome Image</string>
+    <string name="alpha_2_code">Alpha-2 code:</string>
+    <string name="alpha_3_code">Alpha-3 code:</string>
+    <string name="region">Region:</string>
+    <string name="country_code">Country Code:</string>
+    <string name="lang">Lang:</string>
+    <string name="code">Code:</string>
+    <string name="no_amount_inserted">No amount inserted!!</string>
+    <string name="country">Country: </string>
+    <string name="currency">Currency: </string>
+    <string name="symbol">Symbol:</string>
 </resources>

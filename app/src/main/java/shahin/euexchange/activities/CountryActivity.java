@@ -5,7 +5,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,14 +12,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,10 +37,8 @@ import static shahin.euexchange.utilities.Constants.INTENT_COUNTRY_KEY;
 
 public class CountryActivity extends AppCompatActivity implements CountryRecyclerAdapter.CurrencyAdapterListener{
 
-    public static final String LOG_TAG = CountryActivity.class.getSimpleName();
-
     @BindView(R.id.rv_countries) RecyclerView rv_countries;
-    @BindView(R.id.iv_empty) ImageView iv_empty;
+    @BindView(R.id.iv_no_connection) ImageView iv_no_connection;
     @BindView(R.id.pb_loading) ProgressBar pb_loading;
     @BindView(R.id.adView) AdView adView;
     @BindView(R.id.et_search) EditText et_search;
@@ -69,7 +63,7 @@ public class CountryActivity extends AppCompatActivity implements CountryRecycle
         rv_countries.setLayoutManager(layoutManager);
 
         pb_loading.setVisibility(View.VISIBLE);
-        iv_empty.setVisibility(View.GONE);
+        iv_no_connection.setVisibility(View.GONE);
 
         countryRecyclerAdapter = new CountryRecyclerAdapter(this, countryList, this);
 
@@ -109,7 +103,7 @@ public class CountryActivity extends AppCompatActivity implements CountryRecycle
                     countryRecyclerAdapter = new CountryRecyclerAdapter(CountryActivity.this, countryList ,CountryActivity.this);
                     rv_countries.setAdapter(countryRecyclerAdapter);
                     pb_loading.setVisibility(View.GONE);
-                    iv_empty.setVisibility(View.GONE);
+                    iv_no_connection.setVisibility(View.GONE);
                 }else{
                     int statusCode = response.code();
                     snackBarShort(getString(R.string.temp_message) + " " + String.valueOf(statusCode));
@@ -121,7 +115,7 @@ public class CountryActivity extends AppCompatActivity implements CountryRecycle
             public void onFailure(Call<CountryResponse> call, Throwable t) {
                 snackBarIndefinite(getString(R.string.fail_message), getString(R.string.connect_refresh), getString(R.string.done));
                 pb_loading.setVisibility(View.INVISIBLE);
-                iv_empty.setVisibility(View.VISIBLE);
+                iv_no_connection.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -41,7 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/connection" />
+            android:src="@drawable/connection"
+            android:contentDescription="@string/no_connection_image" />
 
         <ProgressBar
             android:id="@+id/pb_loading"
@@ -56,7 +57,7 @@
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ads:adSize="BANNER"
+        ads:adSize="SMART_BANNER"
         ads:adUnitId="ca-app-pub-1885749404874590/3646110245"
         android:background="@color/colorPrimary"/>
 

@@ -1,20 +1,14 @@
 package shahin.euexchange.activities;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,20 +17,10 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,7 +81,6 @@ public class DetailsActivity extends AppCompatActivity {
     private String flagPNG;
 
     private Country country;
-    private Country countryNameFromDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,16 +112,16 @@ public class DetailsActivity extends AppCompatActivity {
             currencySymbol = country.getCurrencySymbol();
             flagPNG = country.getFlagPng();
 
-            tv_alpha2code.setText("Alpha-2 code: " + alpha2code);
-            tv_alpha3code.setText("Alpha-3 code: " + alpha3code);
+            tv_alpha2code.setText(String.format("%s%s", getString(R.string.alpha_2_code), alpha2code));
+            tv_alpha3code.setText(String.format("%s%s", getString(R.string.alpha_3_code), alpha3code));
             tv_native_name.setText(nativeName);
-            tv_region.setText("Region: " + region);
+            tv_region.setText(String.format("%s%s", getString(R.string.region), region));
             tv_sub_region.setText(subRegion);
-            tv_numeric_code.setText("Country Code: " + String.valueOf(numericCode));
-            tv_native_language.setText("Lang: " +  nativeLanguage);
-            tv_currency_code.setText("Code: " + currencyCode);
+            tv_numeric_code.setText(String.format("%s%s", getString(R.string.country_code), String.valueOf(numericCode)));
+            tv_native_language.setText(String.format("%s%s", getString(R.string.lang), nativeLanguage));
+            tv_currency_code.setText(String.format("%s%s", getString(R.string.code), currencyCode));
             tv_currency_name.setText(currencyName);
-            tv_currency_symbol.setText("Symbol: " + currencySymbol);
+            tv_currency_symbol.setText(String.format("%s%s", getString(R.string.symbol), currencySymbol));
 
             Picasso.get()
                     .load(country.getFlagPng())
@@ -161,15 +144,15 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void makeData() {
         ArrayList<WidgetObject> widgetObjects = new ArrayList<>();
-        widgetObjects.add(new WidgetObject(name));
-        widgetObjects.add(new WidgetObject(currencyName));
-        widgetObjects.add(new WidgetObject(currencySymbol));
+        widgetObjects.add(new WidgetObject(getString(R.string.country) + name));
+        widgetObjects.add(new WidgetObject(getString(R.string.currency) + currencyName));
+        widgetObjects.add(new WidgetObject(getString(R.string.symbol) + currencySymbol));
         Gson gson = new Gson();
         String json = gson.toJson(widgetObjects);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(WIDGET_SHARED_PREFS_KEY, json).commit();
+        editor.putString(WIDGET_SHARED_PREFS_KEY, json).apply();
     }
 
     private void sendBroadcast() {

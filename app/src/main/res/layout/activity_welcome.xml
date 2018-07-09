@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/iv_welcome"
     android:src="@drawable/welcome_image"
     android:scaleType="fitXY"
-    tools:context=".activities.WelcomeActivity">
+    tools:context=".activities.WelcomeActivity"
+    android:contentDescription="@string/welcome_image">
 
 </ImageView>

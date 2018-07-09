@@ -6,7 +6,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import shahin.euexchange.R;
@@ -30,7 +29,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
         for(int i = 0; i < appWidgetIds.length; i ++) {
             Intent intent = new Intent(context, MyWidgetRemoteViewsService.class);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
-            intent.putExtra("Random", Math.random() * 1000); // Add a random integer to stop the Intent being ignored.  This is needed for some API levels due to intent caching
+            intent.putExtra("Random", Math.random() * 1000);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             rv.setRemoteAdapter( R.id.widget_list_view, intent);
@@ -40,5 +39,4 @@ public class MyWidgetProvider extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 }
-
 

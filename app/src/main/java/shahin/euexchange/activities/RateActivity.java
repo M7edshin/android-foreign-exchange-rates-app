@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -54,7 +53,6 @@ import shahin.euexchange.background.CurrencyAsyncTaskLoader;
 import shahin.euexchange.networking.ApiRetrofitInterface;
 import shahin.euexchange.networking.RetrofitApiClient;
 import shahin.euexchange.ui.RateRecyclerAdapter;
-import shahin.euexchange.ui.RecyclerViewTouchListener;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 import static shahin.euexchange.utilities.Constants.AD_ID;
@@ -229,7 +227,11 @@ public class RateActivity extends AppCompatActivity implements LoaderManager.Loa
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                euroAmount = Double.parseDouble(input.getText().toString());
+                if(input.getText().toString().equals("")){
+                    snackBarShort(getString(R.string.no_amount_inserted));
+                }else{
+                    euroAmount = Double.parseDouble(input.getText().toString());
+                }
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

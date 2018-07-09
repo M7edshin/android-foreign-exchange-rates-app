@@ -29,7 +29,7 @@
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ads:adSize="BANNER"
+        ads:adSize="SMART_BANNER"
         ads:adUnitId="ca-app-pub-1885749404874590/3646110245"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"/>
