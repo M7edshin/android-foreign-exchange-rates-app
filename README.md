@@ -12,6 +12,8 @@
 
 Developed by Mohamed Shahin
 
+# Google Store: https://play.google.com/store/apps/details?id=shahin.euexchange
+
 ## License
 
    Copyright [2018] [Mohamed Shahin]
