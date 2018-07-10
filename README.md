@@ -12,7 +12,7 @@
 
 Developed by Mohamed Shahin
 
-# Google Store: https://play.google.com/store/apps/details?id=shahin.euexchange
+### Google Store: https://play.google.com/store/apps/details?id=shahin.euexchange
 
 ## License
 
