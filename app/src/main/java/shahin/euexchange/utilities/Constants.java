@@ -31,9 +31,7 @@ public class Constants {
     public static final String AMOUNT_STATE_KEY = "amount_state";
 
     //Ad
-    public static final String AD_ID = "ca-app-pub-1885749404874590~8635369581";
-
-    public static final String MAP_INTENT_KEY = "map_intent_key";
+    public static final String AD_ID = "Ad KEy";
 
     public static void setAdditionalContent(List<Rates> ratesList){
         ratesList.get(0).setImageId(R.drawable.aed_united_arab_emirates);
