@@ -1,18 +1,18 @@
-#EuroCC
+# EuroCC
 
 ![alt text](https://i.imgur.com/5NnpLr5.png?1)
 
-##Latest currencies published by the European Central-bank
+## Latest currencies published by the European Central-bank
 
-###EuroCC allows you to keep track of the latest rates published by the European Central Bank - Rates are hourly updated as well as basic information about any country.
+### EuroCC allows you to keep track of the latest rates published by the European Central Bank - Rates are hourly updated as well as basic information about any country.
 
-*If you travel a lot, different country every trip and wanna know how your budget would fit in different currencies, just convert from € to any other currency in the whole world with one tap. 
+* If you travel a lot, different country every trip and wanna know how your budget would fit in different currencies, just convert from € to any other currency in the whole world with one tap. 
 
-*You need to know about the country you are travelling to, so just one tab to get all basics information about the country
+* You need to know about the country you are travelling to, so just one tab to get all basics information about the country
 
 Developed by Mohamed Shahin
 
-##License
+## License
 
    Copyright [2018] [Mohamed Shahin]
 
