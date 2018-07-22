@@ -10,7 +10,8 @@
 
 * You need to know about the country you are travelling to, so just one tab to get all basics information about the country
 
-### Google Store: https://play.google.com/store/apps/details?id=shahin.euexchange
+### Google Store: 
+https://play.google.com/store/apps/details?id=shahin.euexchange
 
 ## Developed by Mohamed Shahin
 
