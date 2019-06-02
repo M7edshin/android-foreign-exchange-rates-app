@@ -6,10 +6,6 @@
 
 ### EuroCC allows you to keep track of the latest rate published by the European Central Bank - Rates are hourly updated as well as basic information about any country.
 
-* If you travel a lot, different country every trip and wanna know how your budget would fit in different currencies, just convert from € to any other currency in the whole world with one tap. 
-
-* You need to know about the country you are travelling to, so just one tab to get all basics information about the country
-
 ### Google Store: 
 https://play.google.com/store/apps/details?id=shahin.euexchange
 
