@@ -1,41 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="shahin.euexchange.activities.RateActivity">
+    tools:context="shahin.euexchange.activities.MainActivity">
 
     <item
         android:id="@+id/action_search"
-        android:title="@string/search"
         android:icon="@drawable/ic_action_search"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_country"
-        android:title="@string/countries"
-        android:icon="@drawable/ic_action_countries"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_favorite_list"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_action_fav"
-        android:title="@string/favorites"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_report_suggest"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_action_email_us"
-        android:title="@string/str_suggest_report"
-        app:showAsAction="ifRoom" />
+        android:orderInCategory="1"
+        android:title="@string/search"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_refresh_rates"
         android:icon="@drawable/ic_cloud_download_black_24dp"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
         android:title="@string/action_refresh_rates"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/action_policy"
+        android:orderInCategory="3"
+        android:title="@string/privacy_policy"
+        app:showAsAction="never" />
 </menu>

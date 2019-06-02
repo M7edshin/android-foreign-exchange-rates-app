@@ -1,10 +1,14 @@
 package shahin.euexchange.utilities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+
 import java.util.List;
 
 import shahin.euexchange.BuildConfig;
 import shahin.euexchange.R;
-import shahin.euexchange.models.Rates;
+import shahin.euexchange.models.Rate;
 
 public class Constants {
 
@@ -13,707 +17,697 @@ public class Constants {
     public static final String API_ACCESS_KEY = BuildConfig.API_ACCESS_KEY;
     public static final String PAR_ACCESS_KEY = "access_key";
 
-    //Fabian Country API
-    public static final String COUNTRY_BASE_URL = "http://countryapi.gear.host/";
-
-    //RateActivity
+    //MainActivity
     public static final int LOADER_ID = 1;
 
-    //Country & Details Activity
-    public static final String INTENT_COUNTRY_KEY = "country_key";
+    public static void accessPrivacyPolicy(Context context) {
+        String url = "https://github.com/M7edshin/Privacy-Policy";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        context.startActivity(i);
+    }
 
-    //Widget
-    public static final String WIDGET_SHARED_PREFS_KEY = "shared_pref_key";
+    public static void setAdditionalCountryContent(List<Rate> rateList) {
+        rateList.get(0).setImageId(R.drawable.aed_united_arab_emirates);
+        rateList.get(0).setCountry("United Arab Emirates");
+        rateList.get(0).setCurrency("Emirati Dirham");
 
-    //Saving state
-    public static final String LAYOUT_MANAGER_STATE_KEY = "layout_manager_state";
-    public static final String SEARCH_ON_STATE_KEY = "search_on_state";
-    public static final String AMOUNT_STATE_KEY = "amount_state";
+        rateList.get(1).setImageId(R.drawable.afn_afghanistan);
+        rateList.get(1).setCountry("Afghanistan");
+        rateList.get(1).setCurrency("Afghan Afghani");
 
-    //Ad
-    public static final String AD_ID = "Ad KEy";
+        rateList.get(2).setImageId(R.drawable.all_albania);
+        rateList.get(2).setCountry("Albania");
+        rateList.get(2).setCurrency("Albanian Lek");
 
-    public static void setAdditionalContent(List<Rates> ratesList){
-        ratesList.get(0).setImageId(R.drawable.aed_united_arab_emirates);
-        ratesList.get(0).setCountry("United Arab Emirates");
-        ratesList.get(0).setCurrency("Emirati Dirham");
+        rateList.get(3).setImageId(R.drawable.amd_armenia);
+        rateList.get(3).setCountry("Armenia");
+        rateList.get(3).setCurrency("Armenian Dram");
 
-        ratesList.get(1).setImageId(R.drawable.afn_afghanistan);
-        ratesList.get(1).setCountry("Afghanistan");
-        ratesList.get(1).setCurrency("Afghan Afghani");
+        rateList.get(4).setImageId(R.drawable.ang_netherlands);
+        rateList.get(4).setCountry("Netherlands");
+        rateList.get(4).setCurrency("Dutch Guilder");
 
-        ratesList.get(2).setImageId(R.drawable.all_albania);
-        ratesList.get(2).setCountry("Albania");
-        ratesList.get(2).setCurrency("Albanian Lek");
+        rateList.get(5).setImageId(R.drawable.aoa_angola);
+        rateList.get(5).setCountry("Angola");
+        rateList.get(5).setCurrency("Angolan Kwanza");
 
-        ratesList.get(3).setImageId(R.drawable.amd_armenia);
-        ratesList.get(3).setCountry("Armenia");
-        ratesList.get(3).setCurrency("Armenian Dram");
+        rateList.get(6).setImageId(R.drawable.ars_argentina);
+        rateList.get(6).setCountry("Argentina");
+        rateList.get(6).setCurrency("Argentine Peso");
 
-        ratesList.get(4).setImageId(R.drawable.ang_netherlands);
-        ratesList.get(4).setCountry("Netherlands");
-        ratesList.get(4).setCurrency("Dutch Guilder");
+        rateList.get(7).setImageId(R.drawable.aud_australia);
+        rateList.get(7).setCountry("Australia, Kiribati, Coconut Islands, Nauru, Tuvalu");
+        rateList.get(7).setCurrency("Australian Dollar");
 
-        ratesList.get(5).setImageId(R.drawable.aoa_angola);
-        ratesList.get(5).setCountry("Angola");
-        ratesList.get(5).setCurrency("Angolan Kwanza");
+        rateList.get(8).setImageId(R.drawable.awg_aruba);
+        rateList.get(8).setCountry("Aruba");
+        rateList.get(8).setCurrency("Aruban florin");
 
-        ratesList.get(6).setImageId(R.drawable.ars_argentina);
-        ratesList.get(6).setCountry("Argentina");
-        ratesList.get(6).setCurrency("Argentine Peso");
+        rateList.get(9).setImageId(R.drawable.azn_azerbaijan);
+        rateList.get(9).setCountry("Azerbaijan");
+        rateList.get(9).setCurrency("Azerbaijani manat");
 
-        ratesList.get(7).setImageId(R.drawable.aud_australia);
-        ratesList.get(7).setCountry("Australia, Kiribati, Coconut Islands, Nauru, Tuvalu");
-        ratesList.get(7).setCurrency("Australian Dollar");
+        rateList.get(10).setImageId(R.drawable.bam_bosnia_and_herzegovina);
+        rateList.get(10).setCountry("Bosnia and Herzegovina");
+        rateList.get(10).setCurrency("Bosnian Convertible Marka");
 
-        ratesList.get(8).setImageId(R.drawable.awg_aruba);
-        ratesList.get(8).setCountry("Aruba");
-        ratesList.get(8).setCurrency("Aruban florin");
+        rateList.get(11).setImageId(R.drawable.bbd_barbados);
+        rateList.get(11).setCountry("Barbados");
+        rateList.get(11).setCurrency("Barbadian or Bajan Dollar");
 
-        ratesList.get(9).setImageId(R.drawable.azn_azerbaijan);
-        ratesList.get(9).setCountry("Azerbaijan");
-        ratesList.get(9).setCurrency("Azerbaijani manat");
+        rateList.get(12).setImageId(R.drawable.bdt_bangladesh);
+        rateList.get(12).setCountry("Bbangladesh");
+        rateList.get(12).setCurrency("Bangladeshi taka");
 
-        ratesList.get(10).setImageId(R.drawable.bam_bosnia_and_herzegovina);
-        ratesList.get(10).setCountry("Bosnia and Herzegovina");
-        ratesList.get(10).setCurrency("Bosnian Convertible Marka");
+        rateList.get(13).setImageId(R.drawable.bgn_bulgaria);
+        rateList.get(13).setCountry("Bulgaria");
+        rateList.get(13).setCurrency("Bulgarian lev");
 
-        ratesList.get(11).setImageId(R.drawable.bbd_barbados);
-        ratesList.get(11).setCountry("Barbados");
-        ratesList.get(11).setCurrency("Barbadian or Bajan Dollar");
+        rateList.get(14).setImageId(R.drawable.bhd_bahrain);
+        rateList.get(14).setCountry("Bahrain");
+        rateList.get(14).setCurrency("Bahraini dinar");
 
-        ratesList.get(12).setImageId(R.drawable.bdt_bangladesh);
-        ratesList.get(12).setCountry("Bbangladesh");
-        ratesList.get(12).setCurrency("Bangladeshi taka");
+        rateList.get(15).setImageId(R.drawable.bif_burundi);
+        rateList.get(15).setCountry("Burundi");
+        rateList.get(15).setCurrency("Burundian franc");
 
-        ratesList.get(13).setImageId(R.drawable.bgn_bulgaria);
-        ratesList.get(13).setCountry("Bulgaria");
-        ratesList.get(13).setCurrency("Bulgarian lev");
+        rateList.get(16).setImageId(R.drawable.bmd_bermuda);
+        rateList.get(16).setCountry("Bermuda");
+        rateList.get(16).setCurrency("Bermudian dollar");
 
-        ratesList.get(14).setImageId(R.drawable.bhd_bahrain);
-        ratesList.get(14).setCountry("Bahrain");
-        ratesList.get(14).setCurrency("Bahraini dinar");
+        rateList.get(17).setImageId(R.drawable.bnd_brunei);
+        rateList.get(17).setCountry("Brunei, Singapore");
+        rateList.get(17).setCurrency("Brunei dollar");
 
-        ratesList.get(15).setImageId(R.drawable.bif_burundi);
-        ratesList.get(15).setCountry("Burundi");
-        ratesList.get(15).setCurrency("Burundian franc");
+        rateList.get(18).setImageId(R.drawable.bob_bolivia);
+        rateList.get(18).setCountry("Bolivia");
+        rateList.get(18).setCurrency("Bolivian Bolíviano");
 
-        ratesList.get(16).setImageId(R.drawable.bmd_bermuda);
-        ratesList.get(16).setCountry("Bermuda");
-        ratesList.get(16).setCurrency("Bermudian dollar");
+        rateList.get(19).setImageId(R.drawable.brl_brazil);
+        rateList.get(19).setCountry("Brazil");
+        rateList.get(19).setCurrency("Brazilian real");
 
-        ratesList.get(17).setImageId(R.drawable.bnd_brunei);
-        ratesList.get(17).setCountry("Brunei, Singapore");
-        ratesList.get(17).setCurrency("Brunei dollar");
+        rateList.get(20).setImageId(R.drawable.bsd_bahamas);
+        rateList.get(20).setCountry("Bahamas");
+        rateList.get(20).setCurrency("Bahamian Dollar");
 
-        ratesList.get(18).setImageId(R.drawable.bob_bolivia);
-        ratesList.get(18).setCountry("Bolivia");
-        ratesList.get(18).setCurrency("Bolivian Bolíviano");
+        rateList.get(21).setImageId(R.drawable.bitcoin);
+        rateList.get(21).setCountry("Virtual Currency (WorldWide)");
+        rateList.get(21).setCurrency("Bitcoin");
 
-        ratesList.get(19).setImageId(R.drawable.brl_brazil);
-        ratesList.get(19).setCountry("Brazil");
-        ratesList.get(19).setCurrency("Brazilian real");
+        rateList.get(22).setImageId(R.drawable.btn_bhutan);
+        rateList.get(22).setCountry("Bhutan");
+        rateList.get(22).setCurrency("Bhutanese Ngultrum");
 
-        ratesList.get(20).setImageId(R.drawable.bsd_bahamas);
-        ratesList.get(20).setCountry("Bahamas");
-        ratesList.get(20).setCurrency("Bahamian Dollar");
+        rateList.get(23).setImageId(R.drawable.bwp_botswana);
+        rateList.get(23).setCountry("Botswana");
+        rateList.get(23).setCurrency("Botswana pula");
 
-        ratesList.get(21).setImageId(R.drawable.bitcoin);
-        ratesList.get(21).setCountry("Virtual Currency (WorldWide)");
-        ratesList.get(21).setCurrency("Bitcoin");
+        rateList.get(24).setImageId(R.drawable.byn_belarus);
+        rateList.get(24).setCountry("Belarus");
+        rateList.get(24).setCurrency("Belarusian ruble");
 
-        ratesList.get(22).setImageId(R.drawable.btn_bhutan);
-        ratesList.get(22).setCountry("Bhutan");
-        ratesList.get(22).setCurrency("Bhutanese Ngultrum");
+        rateList.get(25).setImageId(R.drawable.byn_belarus);
+        rateList.get(25).setCountry("Belarus");
+        rateList.get(25).setCurrency("Belarusian ruble");
 
-        ratesList.get(23).setImageId(R.drawable.bwp_botswana);
-        ratesList.get(23).setCountry("Botswana");
-        ratesList.get(23).setCurrency("Botswana pula");
+        rateList.get(26).setImageId(R.drawable.bzd_belize);
+        rateList.get(26).setCountry("Belize");
+        rateList.get(26).setCurrency("Belize dollar");
 
-        ratesList.get(24).setImageId(R.drawable.byn_belarus);
-        ratesList.get(24).setCountry("Belarus");
-        ratesList.get(24).setCurrency("Belarusian ruble");
+        rateList.get(27).setImageId(R.drawable.cad_canada);
+        rateList.get(27).setCountry("Canada");
+        rateList.get(27).setCurrency("Canadian Dollar");
 
-        ratesList.get(25).setImageId(R.drawable.byn_belarus);
-        ratesList.get(25).setCountry("Belarus");
-        ratesList.get(25).setCurrency("Belarusian ruble");
+        rateList.get(28).setImageId(R.drawable.cdf_democratic_republic_of_congo);
+        rateList.get(28).setCountry("Democratic Republic of Congo");
+        rateList.get(28).setCurrency("Congolese Franc");
 
-        ratesList.get(26).setImageId(R.drawable.bzd_belize);
-        ratesList.get(26).setCountry("Belize");
-        ratesList.get(26).setCurrency("Belize dollar");
+        rateList.get(29).setImageId(R.drawable.chf_switzerland);
+        rateList.get(29).setCountry("Switzerland, Lichtenstein");
+        rateList.get(29).setCurrency("Swiss Franc");
 
-        ratesList.get(27).setImageId(R.drawable.cad_canada);
-        ratesList.get(27).setCountry("Canada");
-        ratesList.get(27).setCurrency("Canadian Dollar");
+        rateList.get(30).setImageId(R.drawable.clf_chile);
+        rateList.get(30).setCountry("Chile");
+        rateList.get(30).setCurrency("Chilean Unidad de Fomento");
 
-        ratesList.get(28).setImageId(R.drawable.cdf_democratic_republic_of_congo);
-        ratesList.get(28).setCountry("Democratic Republic of Congo");
-        ratesList.get(28).setCurrency("Congolese Franc");
+        rateList.get(31).setImageId(R.drawable.clf_chile);
+        rateList.get(31).setCountry("Chile");
+        rateList.get(31).setCurrency("Chilean Peso");
 
-        ratesList.get(29).setImageId(R.drawable.chf_switzerland);
-        ratesList.get(29).setCountry("Switzerland, Lichtenstein");
-        ratesList.get(29).setCurrency("Swiss Franc");
+        rateList.get(32).setImageId(R.drawable.cny_china);
+        rateList.get(32).setCountry("China");
+        rateList.get(32).setCurrency("Chinese Yuan");
 
-        ratesList.get(30).setImageId(R.drawable.clf_chile);
-        ratesList.get(30).setCountry("Chile");
-        ratesList.get(30).setCurrency("Chilean Unidad de Fomento");
+        rateList.get(33).setImageId(R.drawable.cop_colombia);
+        rateList.get(33).setCountry("Colombia");
+        rateList.get(33).setCurrency("Colombian Peso");
 
-        ratesList.get(31).setImageId(R.drawable.clf_chile);
-        ratesList.get(31).setCountry("Chile");
-        ratesList.get(31).setCurrency("Chilean Peso");
+        rateList.get(34).setImageId(R.drawable.crc_costa_rica);
+        rateList.get(34).setCountry("Costa Rica");
+        rateList.get(34).setCurrency("Costa Rican Colon");
 
-        ratesList.get(32).setImageId(R.drawable.cny_china);
-        ratesList.get(32).setCountry("China");
-        ratesList.get(32).setCurrency("Chinese Yuan");
+        rateList.get(35).setImageId(R.drawable.cuc_cuba);
+        rateList.get(35).setCountry("Cuba");
+        rateList.get(35).setCurrency("Cuban Convertible Peso");
 
-        ratesList.get(33).setImageId(R.drawable.cop_colombia);
-        ratesList.get(33).setCountry("Colombia");
-        ratesList.get(33).setCurrency("Colombian Peso");
+        rateList.get(36).setImageId(R.drawable.cuc_cuba);
+        rateList.get(36).setCountry("Cuba");
+        rateList.get(36).setCurrency("Cuban Peso");
 
-        ratesList.get(34).setImageId(R.drawable.crc_costa_rica);
-        ratesList.get(34).setCountry("Costa Rica");
-        ratesList.get(34).setCurrency("Costa Rican Colon");
+        rateList.get(37).setImageId(R.drawable.cve_cape_verde);
+        rateList.get(37).setCountry("Cape Verde");
+        rateList.get(37).setCurrency("Cape Verdean Escudo");
 
-        ratesList.get(35).setImageId(R.drawable.cuc_cuba);
-        ratesList.get(35).setCountry("Cuba");
-        ratesList.get(35).setCurrency("Cuban Convertible Peso");
+        rateList.get(38).setImageId(R.drawable.czk_czech_republic);
+        rateList.get(38).setCountry("Czechia");
+        rateList.get(38).setCurrency("Czech koruna");
 
-        ratesList.get(36).setImageId(R.drawable.cuc_cuba);
-        ratesList.get(36).setCountry("Cuba");
-        ratesList.get(36).setCurrency("Cuban Peso");
+        rateList.get(39).setImageId(R.drawable.djf_djibouti);
+        rateList.get(39).setCountry("Djibouti");
+        rateList.get(39).setCurrency("Djiboutian Franc");
 
-        ratesList.get(37).setImageId(R.drawable.cve_cape_verde);
-        ratesList.get(37).setCountry("Cape Verde");
-        ratesList.get(37).setCurrency("Cape Verdean Escudo");
+        rateList.get(40).setImageId(R.drawable.dkk_denmark);
+        rateList.get(40).setCountry("Denmark");
+        rateList.get(40).setCurrency("Danish Krone");
 
-        ratesList.get(38).setImageId(R.drawable.czk_czech_republic);
-        ratesList.get(38).setCountry("Czechia");
-        ratesList.get(38).setCurrency("Czech koruna");
+        rateList.get(41).setImageId(R.drawable.dop_dominican_republic);
+        rateList.get(41).setCountry("Dominican Republic");
+        rateList.get(41).setCurrency("Dominican Peso");
 
-        ratesList.get(39).setImageId(R.drawable.djf_djibouti);
-        ratesList.get(39).setCountry("Djibouti");
-        ratesList.get(39).setCurrency("Djiboutian Franc");
+        rateList.get(42).setImageId(R.drawable.dzd_algeria);
+        rateList.get(42).setCountry("Algeria");
+        rateList.get(42).setCurrency("Algerian Dinar");
 
-        ratesList.get(40).setImageId(R.drawable.dkk_denmark);
-        ratesList.get(40).setCountry("Denmark");
-        ratesList.get(40).setCurrency("Danish Krone");
+        rateList.get(43).setImageId(R.drawable.egp_egypt);
+        rateList.get(43).setCountry("Egypt");
+        rateList.get(43).setCurrency("Egyptian pound");
 
-        ratesList.get(41).setImageId(R.drawable.dop_dominican_republic);
-        ratesList.get(41).setCountry("Dominican Republic");
-        ratesList.get(41).setCurrency("Dominican Peso");
+        rateList.get(44).setImageId(R.drawable.ern_eritrea);
+        rateList.get(44).setCountry("Eritrea");
+        rateList.get(44).setCurrency("Eritrean Nakfa");
 
-        ratesList.get(42).setImageId(R.drawable.dzd_algeria);
-        ratesList.get(42).setCountry("Algeria");
-        ratesList.get(42).setCurrency("Algerian Dinar");
+        rateList.get(45).setImageId(R.drawable.etb_ethiopia);
+        rateList.get(45).setCountry("Ethiopia");
+        rateList.get(45).setCurrency("Ethiopian Birr");
 
-        ratesList.get(43).setImageId(R.drawable.egp_egypt);
-        ratesList.get(43).setCountry("Egypt");
-        ratesList.get(43).setCurrency("Egyptian pound");
-
-        ratesList.get(44).setImageId(R.drawable.ern_eritrea);
-        ratesList.get(44).setCountry("Eritrea");
-        ratesList.get(44).setCurrency("Eritrean Nakfa");
-
-        ratesList.get(45).setImageId(R.drawable.etb_ethiopia);
-        ratesList.get(45).setCountry("Ethiopia");
-        ratesList.get(45).setCurrency("Ethiopian Birr");
-
-        ratesList.get(21).setImageId(R.mipmap.ic_launcher);
-        ratesList.get(46).setCountry("Akrotiri and Dhekelia, Andorra, Austria, Belgium, Cyprus, " +
+        rateList.get(21).setImageId(R.mipmap.ic_launcher);
+        rateList.get(46).setCountry("Akrotiri and Dhekelia, Andorra, Austria, Belgium, Cyprus, " +
                 "Estonia, Finland, France, Germany, Greece, Ireland, Italy, Kosovo, Latvia, Lithuania" +
                 "Luxembourg, Malta, Monaco, Montenegro, Netherlands, Portugal, San-Marino, Slovakia" +
                 "Slovenia, Spain, Vatican");
-        ratesList.get(46).setCurrency("Euro");
+        rateList.get(46).setCurrency("Euro");
 
-        ratesList.get(47).setImageId(R.drawable.fjd_fiji);
-        ratesList.get(47).setCountry("Fiji");
-        ratesList.get(47).setCurrency("Fijian dollar");
+        rateList.get(47).setImageId(R.drawable.fjd_fiji);
+        rateList.get(47).setCountry("Fiji");
+        rateList.get(47).setCurrency("Fijian dollar");
 
-        ratesList.get(48).setImageId(R.drawable.fkp_falkland_islands);
-        ratesList.get(48).setCountry("Falkland Island");
-        ratesList.get(48).setCurrency("Falkland Island Pound");
+        rateList.get(48).setImageId(R.drawable.fkp_falkland_islands);
+        rateList.get(48).setCountry("Falkland Island");
+        rateList.get(48).setCurrency("Falkland Island Pound");
 
 
-        ratesList.get(49).setImageId(R.drawable.gbp_england);
-        ratesList.get(49).setCountry("England");
-        ratesList.get(49).setCurrency("Sterling");
+        rateList.get(49).setImageId(R.drawable.gbp_england);
+        rateList.get(49).setCountry("England");
+        rateList.get(49).setCurrency("Sterling");
 
-        ratesList.get(50).setImageId(R.drawable.gel_georgia);
-        ratesList.get(50).setCountry("Georgia");
-        ratesList.get(50).setCurrency("Georgian Lari");
+        rateList.get(50).setImageId(R.drawable.gel_georgia);
+        rateList.get(50).setCountry("Georgia");
+        rateList.get(50).setCurrency("Georgian Lari");
 
-        ratesList.get(51).setImageId(R.drawable.ggp_guernsey);
-        ratesList.get(51).setCountry("Guernsey");
-        ratesList.get(51).setCurrency("Guernsey Pound");
+        rateList.get(51).setImageId(R.drawable.ggp_guernsey);
+        rateList.get(51).setCountry("Guernsey");
+        rateList.get(51).setCurrency("Guernsey Pound");
 
-        ratesList.get(52).setImageId(R.drawable.ghs_ghana);
-        ratesList.get(52).setCountry("Ghana");
-        ratesList.get(52).setCurrency("Ghanaian Cedi");
+        rateList.get(52).setImageId(R.drawable.ghs_ghana);
+        rateList.get(52).setCountry("Ghana");
+        rateList.get(52).setCurrency("Ghanaian Cedi");
 
-        ratesList.get(53).setImageId(R.drawable.gip_gibraltar);
-        ratesList.get(53).setCountry("Gibraltar");
-        ratesList.get(53).setCurrency("Gibraltar pound");
+        rateList.get(53).setImageId(R.drawable.gip_gibraltar);
+        rateList.get(53).setCountry("Gibraltar");
+        rateList.get(53).setCurrency("Gibraltar pound");
 
-        ratesList.get(54).setImageId(R.drawable.gmd_gambia);
-        ratesList.get(54).setCountry("Gambia");
-        ratesList.get(54).setCurrency("Gambian Dalasi");
+        rateList.get(54).setImageId(R.drawable.gmd_gambia);
+        rateList.get(54).setCountry("Gambia");
+        rateList.get(54).setCurrency("Gambian Dalasi");
 
-        ratesList.get(55).setImageId(R.drawable.gnf_guinea);
-        ratesList.get(55).setCountry("Guinea");
-        ratesList.get(55).setCurrency("Guinean franc");
+        rateList.get(55).setImageId(R.drawable.gnf_guinea);
+        rateList.get(55).setCountry("Guinea");
+        rateList.get(55).setCurrency("Guinean franc");
 
-        ratesList.get(56).setImageId(R.drawable.gtq_guatemala);
-        ratesList.get(56).setCountry("Guatemala");
-        ratesList.get(56).setCurrency("Guatemalan Quetzal");
+        rateList.get(56).setImageId(R.drawable.gtq_guatemala);
+        rateList.get(56).setCountry("Guatemala");
+        rateList.get(56).setCurrency("Guatemalan Quetzal");
 
-        ratesList.get(57).setImageId(R.mipmap.ic_launcher);
-        ratesList.get(57).setCountry("British Guiana");
-        ratesList.get(57).setCurrency("Guyanaese Dollar");
+        rateList.get(57).setImageId(R.mipmap.ic_launcher);
+        rateList.get(57).setCountry("British Guiana");
+        rateList.get(57).setCurrency("Guyanaese Dollar");
 
-        ratesList.get(58).setImageId(R.drawable.hkd_hong_kong);
-        ratesList.get(58).setCountry("Hong Kong");
-        ratesList.get(58).setCurrency("Hong Kong Dollar");
+        rateList.get(58).setImageId(R.drawable.hkd_hong_kong);
+        rateList.get(58).setCountry("Hong Kong");
+        rateList.get(58).setCurrency("Hong Kong Dollar");
 
-        ratesList.get(59).setImageId(R.drawable.hnl_honduras);
-        ratesList.get(59).setCountry("Honduras");
-        ratesList.get(59).setCurrency("Honduran Lempira");
+        rateList.get(59).setImageId(R.drawable.hnl_honduras);
+        rateList.get(59).setCountry("Honduras");
+        rateList.get(59).setCurrency("Honduran Lempira");
 
-        ratesList.get(60).setImageId(R.drawable.hrk_croatia);
-        ratesList.get(60).setCountry("Croatia");
-        ratesList.get(60).setCurrency("Croatian Kuna");
+        rateList.get(60).setImageId(R.drawable.hrk_croatia);
+        rateList.get(60).setCountry("Croatia");
+        rateList.get(60).setCurrency("Croatian Kuna");
 
-        ratesList.get(61).setImageId(R.drawable.htg_haiti);
-        ratesList.get(61).setCountry("Haiti");
-        ratesList.get(61).setCurrency("Haitian Gourde");
+        rateList.get(61).setImageId(R.drawable.htg_haiti);
+        rateList.get(61).setCountry("Haiti");
+        rateList.get(61).setCurrency("Haitian Gourde");
 
-        ratesList.get(62).setImageId(R.drawable.huf_hungary);
-        ratesList.get(62).setCountry("Hungary");
-        ratesList.get(62).setCurrency("Hungarian Forint");
+        rateList.get(62).setImageId(R.drawable.huf_hungary);
+        rateList.get(62).setCountry("Hungary");
+        rateList.get(62).setCurrency("Hungarian Forint");
 
-        ratesList.get(63).setImageId(R.drawable.idr_indonesia);
-        ratesList.get(63).setCountry("Indonesia");
-        ratesList.get(63).setCurrency("Indonesian Rupiah");
+        rateList.get(63).setImageId(R.drawable.idr_indonesia);
+        rateList.get(63).setCountry("Indonesia");
+        rateList.get(63).setCurrency("Indonesian Rupiah");
 
-        //ratesList.get(64).setImageId(R.drawable.); NO FLAG
-        ratesList.get(64).setCountry("Israel");
-        ratesList.get(64).setCurrency("Shekel");
+        //rateList.get(64).setImageId(R.drawable.); "Israel"
+        rateList.get(64).setCountry("N/A");
+        rateList.get(64).setCurrency("N/A");
 
-        ratesList.get(65).setImageId(R.drawable.imp_isle_of_man);
-        ratesList.get(65).setCountry("Isle of man");
-        ratesList.get(65).setCurrency("Isle of Man Pound");
+        rateList.get(65).setImageId(R.drawable.imp_isle_of_man);
+        rateList.get(65).setCountry("Isle of man");
+        rateList.get(65).setCurrency("Isle of Man Pound");
 
-        ratesList.get(66).setImageId(R.drawable.inr_india);
-        ratesList.get(66).setCountry("India");
-        ratesList.get(66).setCurrency("Indian rupee");
+        rateList.get(66).setImageId(R.drawable.inr_india);
+        rateList.get(66).setCountry("India");
+        rateList.get(66).setCurrency("Indian rupee");
 
-        ratesList.get(67).setImageId(R.drawable.iqd_iraq);
-        ratesList.get(67).setCountry("Iraq");
-        ratesList.get(67).setCurrency("Iraqi Dinar");
+        rateList.get(67).setImageId(R.drawable.iqd_iraq);
+        rateList.get(67).setCountry("Iraq");
+        rateList.get(67).setCurrency("Iraqi Dinar");
 
-        ratesList.get(68).setImageId(R.drawable.irr_iran);
-        ratesList.get(68).setCountry("Iran");
-        ratesList.get(68).setCurrency("Iranian Rial");
+        rateList.get(68).setImageId(R.drawable.irr_iran);
+        rateList.get(68).setCountry("Iran");
+        rateList.get(68).setCurrency("Iranian Rial");
 
-        ratesList.get(69).setImageId(R.drawable.isk_iceland);
-        ratesList.get(69).setCountry("Iceland");
-        ratesList.get(69).setCurrency("Icelandic Krona");
+        rateList.get(69).setImageId(R.drawable.isk_iceland);
+        rateList.get(69).setCountry("Iceland");
+        rateList.get(69).setCurrency("Icelandic Krona");
 
-        ratesList.get(70).setImageId(R.drawable.jep_jersey);
-        ratesList.get(70).setCountry("Jersey");
-        ratesList.get(70).setCurrency("Jersey Pound");
+        rateList.get(70).setImageId(R.drawable.jep_jersey);
+        rateList.get(70).setCountry("Jersey");
+        rateList.get(70).setCurrency("Jersey Pound");
 
-        ratesList.get(71).setImageId(R.drawable.jmd_jamaica);
-        ratesList.get(71).setCountry("Jamaica");
-        ratesList.get(71).setCurrency("Jamaican Dollar");
-
-        ratesList.get(72).setImageId(R.drawable.jod_jordan);
-        ratesList.get(72).setCountry("Jordan");
-        ratesList.get(72).setCurrency("Jordanian Dinar");
-
-        ratesList.get(73).setImageId(R.drawable.jpy_japan);
-        ratesList.get(73).setCountry("Japan");
-        ratesList.get(73).setCurrency("Japanese Yen");
-
-        ratesList.get(74).setImageId(R.drawable.kes_kenya);
-        ratesList.get(74).setCountry("Kenya");
-        ratesList.get(74).setCurrency("Kenyan Shilling");
-
-        ratesList.get(75).setImageId(R.drawable.kgs_kyrgyzstan);
-        ratesList.get(75).setCountry("Kyrgyzstan");
-        ratesList.get(75).setCurrency("Kyrgyzstani Som");
-
-        ratesList.get(76).setImageId(R.drawable.khr_cambodia);
-        ratesList.get(76).setCountry("Cambodia");
-        ratesList.get(76).setCurrency("Cambodian Riel");
-
-        ratesList.get(77).setImageId(R.drawable.kmf_comoros);
-        ratesList.get(77).setCountry("Comoros");
-        ratesList.get(77).setCurrency("Comorian Franc");
-
-        ratesList.get(78).setImageId(R.drawable.kpw_northkorea);
-        ratesList.get(78).setCountry("North Korea");
-        ratesList.get(78).setCurrency("North Korean Won");
-
-        ratesList.get(79).setImageId(R.drawable.krw_southkorea);
-        ratesList.get(79).setCountry("South Korea");
-        ratesList.get(79).setCurrency("South Korean Won");
-
-        ratesList.get(80).setImageId(R.drawable.kwd_kwait);
-        ratesList.get(80).setCountry("Kuwait");
-        ratesList.get(80).setCurrency("Kuwaiti Dinar");
-
-        ratesList.get(81).setImageId(R.drawable.kyd_caymanislands);
-        ratesList.get(81).setCountry("Caymanislands");
-        ratesList.get(81).setCurrency("Caymanian Dollar");
-
-        ratesList.get(82).setImageId(R.drawable.kzt_kazakhstan);
-        ratesList.get(82).setCountry("Kazakhstan");
-        ratesList.get(82).setCurrency("Kazakhstani Tenge");
-
-        ratesList.get(83).setImageId(R.drawable.lak_laos);
-        ratesList.get(83).setCountry("Laos");
-        ratesList.get(83).setCurrency("Lao Kip");
-
-        ratesList.get(84).setImageId(R.drawable.lbp_lebanon);
-        ratesList.get(84).setCountry("Lebanon");
-        ratesList.get(84).setCurrency("Lebanese pound");
-
-        ratesList.get(85).setImageId(R.drawable.lkr_srilanka);
-        ratesList.get(85).setCountry("Sri lanka");
-        ratesList.get(85).setCurrency("Sri Lankan Rupee");
-
-        ratesList.get(86).setImageId(R.drawable.lrd_liberia);
-        ratesList.get(86).setCountry("Liberia");
-        ratesList.get(86).setCurrency("Liberian Dollar");
-
-        ratesList.get(87).setImageId(R.drawable.lsl_lesotho);
-        ratesList.get(87).setCountry("Lesotho");
-        ratesList.get(87).setCurrency("Lesotho Loti");
-
-        ratesList.get(88).setImageId(R.drawable.ltl_lithuania);
-        ratesList.get(88).setCountry("Lithuania");
-        ratesList.get(88).setCurrency("Lithuanian Litas");
-
-        ratesList.get(89).setImageId(R.drawable.lvl_latvia);
-        ratesList.get(89).setCountry("Latvia");
-        ratesList.get(89).setCurrency("Lithuanian Litas");
-
-        ratesList.get(90).setImageId(R.drawable.lyd_libya);
-        ratesList.get(90).setCountry("Libya");
-        ratesList.get(90).setCurrency("Libyan Dinar");
-
-        ratesList.get(91).setImageId(R.drawable.mad_morocco);
-        ratesList.get(91).setCountry("Morocco");
-        ratesList.get(91).setCurrency("Moroccan Dirham");
-
-        ratesList.get(92).setImageId(R.drawable.mdl_moldova);
-        ratesList.get(92).setCountry("Moldova");
-        ratesList.get(92).setCurrency("Moldovan Leu");
-
-        ratesList.get(93).setImageId(R.drawable.mga_madagascar);
-        ratesList.get(93).setCountry("Madagascar");
-        ratesList.get(93).setCurrency("Malagasy Ariary");
-
-        ratesList.get(94).setImageId(R.drawable.mkd_republic_of_macedonia);
-        ratesList.get(94).setCountry("Republic of Macedonia");
-        ratesList.get(94).setCurrency("Macedonian Denar");
-
-        ratesList.get(95).setImageId(R.drawable.mmk_myanmar);
-        ratesList.get(95).setCountry("Myanmar");
-        ratesList.get(95).setCurrency("Burmese Kyat");
-
-        ratesList.get(96).setImageId(R.drawable.mnt_mongolia);
-        ratesList.get(96).setCountry("Mongolia");
-        ratesList.get(96).setCurrency("Mongolian Tughrik");
-
-        ratesList.get(97).setImageId(R.drawable.mop_macau);
-        ratesList.get(97).setCountry("Macau");
-        ratesList.get(97).setCurrency("Macau Pataca");
-
-        ratesList.get(98).setImageId(R.drawable.mro_mauritania);
-        ratesList.get(98).setCountry("Mauritania");
-        ratesList.get(98).setCurrency("Mauritanian Ouguiya");
-
-        ratesList.get(99).setImageId(R.drawable.mur_mauritius);
-        ratesList.get(99).setCountry("Mauritius");
-        ratesList.get(99).setCurrency("Mauritian Rupee");
-
-        ratesList.get(100).setImageId(R.drawable.mvr_maldives);
-        ratesList.get(100).setCountry("Maldives");
-        ratesList.get(100).setCurrency("Maldivian Rufiyaa");
-
-        ratesList.get(101).setImageId(R.drawable.mwk_malawi);
-        ratesList.get(101).setCountry("Malawi");
-        ratesList.get(101).setCurrency("Malawian Kwacha");
-
-        ratesList.get(102).setImageId(R.drawable.mxn_mexico);
-        ratesList.get(102).setCountry("Mexico");
-        ratesList.get(102).setCurrency("Mexican peso");
-
-        ratesList.get(103).setImageId(R.drawable.myr_malasya);
-        ratesList.get(103).setCountry("Malasya");
-        ratesList.get(103).setCurrency("Malaysian Ringgit");
-
-        ratesList.get(104).setImageId(R.drawable.mzn_mozambique);
-        ratesList.get(104).setCountry("Mozambique");
-        ratesList.get(104).setCurrency("Mozambican metical");
-
-        ratesList.get(105).setImageId(R.drawable.nad_namibia);
-        ratesList.get(105).setCountry("Namibia");
-        ratesList.get(105).setCurrency("Namibian Dollar");
-
-        ratesList.get(106).setImageId(R.drawable.ngn_nigeria);
-        ratesList.get(106).setCountry("Nigeria");
-        ratesList.get(106).setCurrency("Nigerian Naira");
-
-        ratesList.get(107).setImageId(R.drawable.nio_nicaragua);
-        ratesList.get(107).setCountry("Nicaragua");
-        ratesList.get(107).setCurrency("Nicaraguan Cordoba");
-
-        ratesList.get(108).setImageId(R.drawable.nok_norway);
-        ratesList.get(108).setCountry("Norway");
-        ratesList.get(108).setCurrency("Norwegian Krone");
-
-        ratesList.get(109).setImageId(R.drawable.npr_nepal);
-        ratesList.get(109).setCountry("Nepal");
-        ratesList.get(109).setCurrency("Nepalese Rupee");
-
-        ratesList.get(110).setImageId(R.drawable.nzd_new_zealand);
-        ratesList.get(110).setCountry("New Zealand, Cook Islands, Niue, Pitcairn Island");
-        ratesList.get(110).setCurrency("New Zealand Dollar");
-
-        ratesList.get(111).setImageId(R.drawable.omr_oman);
-        ratesList.get(111).setCountry("Oman");
-        ratesList.get(111).setCurrency("Omani Rial");
-
-        ratesList.get(112).setImageId(R.drawable.pab_panama);
-        ratesList.get(112).setCountry("Panama");
-        ratesList.get(112).setCurrency("Balboa");
-
-        ratesList.get(113).setImageId(R.drawable.pen_peru);
-        ratesList.get(113).setCountry("Peru");
-        ratesList.get(113).setCurrency("Nuevo Sol");
-
-        ratesList.get(114).setImageId(R.drawable.pgk_papua_new_guinea);
-        ratesList.get(114).setCountry("Papua New Guinea");
-        ratesList.get(114).setCurrency("Kina");
-
-        ratesList.get(115).setImageId(R.drawable.php_philippines);
-        ratesList.get(115).setCountry("Philippines");
-        ratesList.get(115).setCurrency("Philippine Peso");
-
-        ratesList.get(116).setImageId(R.drawable.pkr_pakistan);
-        ratesList.get(116).setCountry("Pakistan");
-        ratesList.get(116).setCurrency("Pakistan Rupee");
-
-        ratesList.get(117).setImageId(R.drawable.pln_poland);
-        ratesList.get(117).setCountry("Poland");
-        ratesList.get(117).setCurrency("Zloty");
-
-        ratesList.get(118).setImageId(R.drawable.pyg_paraguay);
-        ratesList.get(118).setCountry("Paraguay");
-        ratesList.get(118).setCurrency("Guarani");
-
-        ratesList.get(119).setImageId(R.drawable.qar_qatar);
-        ratesList.get(119).setCountry("Qatar");
-        ratesList.get(119).setCurrency("Qatari Rial");
-
-        ratesList.get(120).setImageId(R.drawable.ron_romania);
-        ratesList.get(120).setCountry("Romania");
-        ratesList.get(120).setCurrency("Leu");
-
-        ratesList.get(121).setImageId(R.drawable.rsd_serbia);
-        ratesList.get(121).setCountry("Serbia, Kosovo");
-        ratesList.get(121).setCurrency("Serbian Dinar");
-
-        ratesList.get(122).setImageId(R.drawable.rub_russia);
-        ratesList.get(122).setCountry("Russia, South Ossetia");
-        ratesList.get(122).setCurrency("Russian Ruble");
-
-        ratesList.get(123).setImageId(R.drawable.rwf_rwanda);
-        ratesList.get(123).setCountry("Rwanda");
-        ratesList.get(123).setCurrency("Rwanda Franc");
-
-        ratesList.get(124).setImageId(R.drawable.sar_saudi_arabia);
-        ratesList.get(124).setCountry("Saudi Arabia");
-        ratesList.get(124).setCurrency("Saudi Riyal");
-
-        ratesList.get(125).setImageId(R.drawable.sbd_solomon_islands);
-        ratesList.get(125).setCountry("Solomon Islands");
-        ratesList.get(125).setCurrency("Solomon Islands Dollar");
-
-        ratesList.get(126).setImageId(R.drawable.scr_seychelles);
-        ratesList.get(126).setCountry("Seychelles");
-        ratesList.get(126).setCurrency("Seychelles Rupee");
-
-        ratesList.get(127).setImageId(R.drawable.sdg_sudan);
-        ratesList.get(127).setCountry("Sudan");
-        ratesList.get(127).setCurrency("Sudanese Pound");
-
-        ratesList.get(128).setImageId(R.drawable.sek_sweden);
-        ratesList.get(128).setCountry("Sweden");
-        ratesList.get(128).setCurrency("Swedish Krona");
-
-        ratesList.get(129).setImageId(R.drawable.sgd_singapore);
-        ratesList.get(129).setCountry("Singapore");
-        ratesList.get(129).setCurrency("Singapore Dollar");
-
-        //ratesList.get(130).setImageId(R.drawable.); No flag
-        ratesList.get(130).setCountry("Saint Helena, Ascension Island, Tristan da Cunha");
-        ratesList.get(130).setCurrency("Saint Helena Pound");
-
-        ratesList.get(131).setImageId(R.drawable.sll_sierra_leone);
-        ratesList.get(131).setCountry("Sierra Leone");
-        ratesList.get(131).setCurrency("Leone");
-
-        ratesList.get(132).setImageId(R.drawable.sos_somalia);
-        ratesList.get(132).setCountry("Somalia");
-        ratesList.get(132).setCurrency("Somali Shilling");
-
-        ratesList.get(133).setImageId(R.drawable.srd_suriname);
-        ratesList.get(133).setCountry("Suriname");
-        ratesList.get(133).setCurrency("Suriname Dollar");
-
-        ratesList.get(134).setImageId(R.drawable.std_sao_tome_and_prince);
-        ratesList.get(134).setCountry("Sao Tome and Prince");
-        ratesList.get(134).setCurrency("Dobra");
-
-        ratesList.get(135).setImageId(R.drawable.svc_el_salvador);
-        ratesList.get(135).setCountry("El Salvador");
-        ratesList.get(135).setCurrency("Salvadoran Colón");
-
-        ratesList.get(136).setImageId(R.drawable.syp_syria);
-        ratesList.get(136).setCountry("Syria");
-        ratesList.get(136).setCurrency("Syrian Pound");
-
-        ratesList.get(137).setImageId(R.drawable.szl_swaziland);
-        ratesList.get(137).setCountry("Swaziland");
-        ratesList.get(137).setCurrency("Lilangeni");
-
-        ratesList.get(138).setImageId(R.drawable.thb_thailand);
-        ratesList.get(138).setCountry("Thailand");
-        ratesList.get(138).setCurrency("Baht");
-
-        ratesList.get(139).setImageId(R.drawable.tjs_tajikistan);
-        ratesList.get(139).setCountry("Tajikistan");
-        ratesList.get(139).setCurrency("Somoni");
-
-        ratesList.get(140).setImageId(R.drawable.tmt_turkmenistan);
-        ratesList.get(140).setCountry("Turkmenistan");
-        ratesList.get(140).setCurrency("Manat");
-
-        ratesList.get(141).setImageId(R.drawable.tnd_tunisia);
-        ratesList.get(141).setCountry("Tunisia");
-        ratesList.get(141).setCurrency("Tunisian Dinar");
-
-        ratesList.get(142).setImageId(R.drawable.top_tonga);
-        ratesList.get(142).setCountry("Tonga");
-        ratesList.get(142).setCurrency("Pa’anga");
-
-        ratesList.get(143).setImageId(R.drawable.try_turkey);
-        ratesList.get(143).setCountry("Turkey, North Cyprus");
-        ratesList.get(143).setCurrency("Turkish Lira");
-
-        ratesList.get(144).setImageId(R.drawable.ttd_trinidad_and_tobago);
-        ratesList.get(144).setCountry("Trinidad and Tobago");
-        ratesList.get(144).setCurrency("Trinidad and Tobago Dollar");
-
-        ratesList.get(145).setImageId(R.drawable.twd_taiwan);
-        ratesList.get(145).setCountry("Taiwan");
-        ratesList.get(145).setCurrency("Taiwan Dollar");
-
-        ratesList.get(146).setImageId(R.drawable.tzs_tanzania);
-        ratesList.get(146).setCountry("Tanzania");
-        ratesList.get(146).setCurrency("Tanzanian Shilling");
-
-        ratesList.get(147).setImageId(R.drawable.uah_ukraine);
-        ratesList.get(147).setCountry("Ukraine");
-        ratesList.get(147).setCurrency("Hryvnia");
-
-        ratesList.get(148).setImageId(R.drawable.ugx_uganda);
-        ratesList.get(148).setCountry("Uganda");
-        ratesList.get(148).setCurrency("Uganda Shilling");
-
-        ratesList.get(149).setImageId(R.drawable.usd_united_states);
-        ratesList.get(149).setCountry("United States of America, American Samoa, British Indian Ocean Territory, " +
+        rateList.get(71).setImageId(R.drawable.jmd_jamaica);
+        rateList.get(71).setCountry("Jamaica");
+        rateList.get(71).setCurrency("Jamaican Dollar");
+
+        rateList.get(72).setImageId(R.drawable.jod_jordan);
+        rateList.get(72).setCountry("Jordan");
+        rateList.get(72).setCurrency("Jordanian Dinar");
+
+        rateList.get(73).setImageId(R.drawable.jpy_japan);
+        rateList.get(73).setCountry("Japan");
+        rateList.get(73).setCurrency("Japanese Yen");
+
+        rateList.get(74).setImageId(R.drawable.kes_kenya);
+        rateList.get(74).setCountry("Kenya");
+        rateList.get(74).setCurrency("Kenyan Shilling");
+
+        rateList.get(75).setImageId(R.drawable.kgs_kyrgyzstan);
+        rateList.get(75).setCountry("Kyrgyzstan");
+        rateList.get(75).setCurrency("Kyrgyzstani Som");
+
+        rateList.get(76).setImageId(R.drawable.khr_cambodia);
+        rateList.get(76).setCountry("Cambodia");
+        rateList.get(76).setCurrency("Cambodian Riel");
+
+        rateList.get(77).setImageId(R.drawable.kmf_comoros);
+        rateList.get(77).setCountry("Comoros");
+        rateList.get(77).setCurrency("Comorian Franc");
+
+        rateList.get(78).setImageId(R.drawable.kpw_northkorea);
+        rateList.get(78).setCountry("North Korea");
+        rateList.get(78).setCurrency("North Korean Won");
+
+        rateList.get(79).setImageId(R.drawable.krw_southkorea);
+        rateList.get(79).setCountry("South Korea");
+        rateList.get(79).setCurrency("South Korean Won");
+
+        rateList.get(80).setImageId(R.drawable.kwd_kwait);
+        rateList.get(80).setCountry("Kuwait");
+        rateList.get(80).setCurrency("Kuwaiti Dinar");
+
+        rateList.get(81).setImageId(R.drawable.kyd_caymanislands);
+        rateList.get(81).setCountry("Caymanislands");
+        rateList.get(81).setCurrency("Caymanian Dollar");
+
+        rateList.get(82).setImageId(R.drawable.kzt_kazakhstan);
+        rateList.get(82).setCountry("Kazakhstan");
+        rateList.get(82).setCurrency("Kazakhstani Tenge");
+
+        rateList.get(83).setImageId(R.drawable.lak_laos);
+        rateList.get(83).setCountry("Laos");
+        rateList.get(83).setCurrency("Lao Kip");
+
+        rateList.get(84).setImageId(R.drawable.lbp_lebanon);
+        rateList.get(84).setCountry("Lebanon");
+        rateList.get(84).setCurrency("Lebanese pound");
+
+        rateList.get(85).setImageId(R.drawable.lkr_srilanka);
+        rateList.get(85).setCountry("Sri lanka");
+        rateList.get(85).setCurrency("Sri Lankan Rupee");
+
+        rateList.get(86).setImageId(R.drawable.lrd_liberia);
+        rateList.get(86).setCountry("Liberia");
+        rateList.get(86).setCurrency("Liberian Dollar");
+
+        rateList.get(87).setImageId(R.drawable.lsl_lesotho);
+        rateList.get(87).setCountry("Lesotho");
+        rateList.get(87).setCurrency("Lesotho Loti");
+
+        rateList.get(88).setImageId(R.drawable.ltl_lithuania);
+        rateList.get(88).setCountry("Lithuania");
+        rateList.get(88).setCurrency("Lithuanian Litas");
+
+        rateList.get(89).setImageId(R.drawable.lvl_latvia);
+        rateList.get(89).setCountry("Latvia");
+        rateList.get(89).setCurrency("Lithuanian Litas");
+
+        rateList.get(90).setImageId(R.drawable.lyd_libya);
+        rateList.get(90).setCountry("Libya");
+        rateList.get(90).setCurrency("Libyan Dinar");
+
+        rateList.get(91).setImageId(R.drawable.mad_morocco);
+        rateList.get(91).setCountry("Morocco");
+        rateList.get(91).setCurrency("Moroccan Dirham");
+
+        rateList.get(92).setImageId(R.drawable.mdl_moldova);
+        rateList.get(92).setCountry("Moldova");
+        rateList.get(92).setCurrency("Moldovan Leu");
+
+        rateList.get(93).setImageId(R.drawable.mga_madagascar);
+        rateList.get(93).setCountry("Madagascar");
+        rateList.get(93).setCurrency("Malagasy Ariary");
+
+        rateList.get(94).setImageId(R.drawable.mkd_republic_of_macedonia);
+        rateList.get(94).setCountry("Republic of Macedonia");
+        rateList.get(94).setCurrency("Macedonian Denar");
+
+        rateList.get(95).setImageId(R.drawable.mmk_myanmar);
+        rateList.get(95).setCountry("Myanmar");
+        rateList.get(95).setCurrency("Burmese Kyat");
+
+        rateList.get(96).setImageId(R.drawable.mnt_mongolia);
+        rateList.get(96).setCountry("Mongolia");
+        rateList.get(96).setCurrency("Mongolian Tughrik");
+
+        rateList.get(97).setImageId(R.drawable.mop_macau);
+        rateList.get(97).setCountry("Macau");
+        rateList.get(97).setCurrency("Macau Pataca");
+
+        rateList.get(98).setImageId(R.drawable.mro_mauritania);
+        rateList.get(98).setCountry("Mauritania");
+        rateList.get(98).setCurrency("Mauritanian Ouguiya");
+
+        rateList.get(99).setImageId(R.drawable.mur_mauritius);
+        rateList.get(99).setCountry("Mauritius");
+        rateList.get(99).setCurrency("Mauritian Rupee");
+
+        rateList.get(100).setImageId(R.drawable.mvr_maldives);
+        rateList.get(100).setCountry("Maldives");
+        rateList.get(100).setCurrency("Maldivian Rufiyaa");
+
+        rateList.get(101).setImageId(R.drawable.mwk_malawi);
+        rateList.get(101).setCountry("Malawi");
+        rateList.get(101).setCurrency("Malawian Kwacha");
+
+        rateList.get(102).setImageId(R.drawable.mxn_mexico);
+        rateList.get(102).setCountry("Mexico");
+        rateList.get(102).setCurrency("Mexican peso");
+
+        rateList.get(103).setImageId(R.drawable.myr_malasya);
+        rateList.get(103).setCountry("Malasya");
+        rateList.get(103).setCurrency("Malaysian Ringgit");
+
+        rateList.get(104).setImageId(R.drawable.mzn_mozambique);
+        rateList.get(104).setCountry("Mozambique");
+        rateList.get(104).setCurrency("Mozambican metical");
+
+        rateList.get(105).setImageId(R.drawable.nad_namibia);
+        rateList.get(105).setCountry("Namibia");
+        rateList.get(105).setCurrency("Namibian Dollar");
+
+        rateList.get(106).setImageId(R.drawable.ngn_nigeria);
+        rateList.get(106).setCountry("Nigeria");
+        rateList.get(106).setCurrency("Nigerian Naira");
+
+        rateList.get(107).setImageId(R.drawable.nio_nicaragua);
+        rateList.get(107).setCountry("Nicaragua");
+        rateList.get(107).setCurrency("Nicaraguan Cordoba");
+
+        rateList.get(108).setImageId(R.drawable.nok_norway);
+        rateList.get(108).setCountry("Norway");
+        rateList.get(108).setCurrency("Norwegian Krone");
+
+        rateList.get(109).setImageId(R.drawable.npr_nepal);
+        rateList.get(109).setCountry("Nepal");
+        rateList.get(109).setCurrency("Nepalese Rupee");
+
+        rateList.get(110).setImageId(R.drawable.nzd_new_zealand);
+        rateList.get(110).setCountry("New Zealand, Cook Islands, Niue, Pitcairn Island");
+        rateList.get(110).setCurrency("New Zealand Dollar");
+
+        rateList.get(111).setImageId(R.drawable.omr_oman);
+        rateList.get(111).setCountry("Oman");
+        rateList.get(111).setCurrency("Omani Rial");
+
+        rateList.get(112).setImageId(R.drawable.pab_panama);
+        rateList.get(112).setCountry("Panama");
+        rateList.get(112).setCurrency("Balboa");
+
+        rateList.get(113).setImageId(R.drawable.pen_peru);
+        rateList.get(113).setCountry("Peru");
+        rateList.get(113).setCurrency("Nuevo Sol");
+
+        rateList.get(114).setImageId(R.drawable.pgk_papua_new_guinea);
+        rateList.get(114).setCountry("Papua New Guinea");
+        rateList.get(114).setCurrency("Kina");
+
+        rateList.get(115).setImageId(R.drawable.php_philippines);
+        rateList.get(115).setCountry("Philippines");
+        rateList.get(115).setCurrency("Philippine Peso");
+
+        rateList.get(116).setImageId(R.drawable.pkr_pakistan);
+        rateList.get(116).setCountry("Pakistan");
+        rateList.get(116).setCurrency("Pakistan Rupee");
+
+        rateList.get(117).setImageId(R.drawable.pln_poland);
+        rateList.get(117).setCountry("Poland");
+        rateList.get(117).setCurrency("Zloty");
+
+        rateList.get(118).setImageId(R.drawable.pyg_paraguay);
+        rateList.get(118).setCountry("Paraguay");
+        rateList.get(118).setCurrency("Guarani");
+
+        rateList.get(119).setImageId(R.drawable.qar_qatar);
+        rateList.get(119).setCountry("Qatar");
+        rateList.get(119).setCurrency("Qatari Rial");
+
+        rateList.get(120).setImageId(R.drawable.ron_romania);
+        rateList.get(120).setCountry("Romania");
+        rateList.get(120).setCurrency("Leu");
+
+        rateList.get(121).setImageId(R.drawable.rsd_serbia);
+        rateList.get(121).setCountry("Serbia, Kosovo");
+        rateList.get(121).setCurrency("Serbian Dinar");
+
+        rateList.get(122).setImageId(R.drawable.rub_russia);
+        rateList.get(122).setCountry("Russia, South Ossetia");
+        rateList.get(122).setCurrency("Russian Ruble");
+
+        rateList.get(123).setImageId(R.drawable.rwf_rwanda);
+        rateList.get(123).setCountry("Rwanda");
+        rateList.get(123).setCurrency("Rwanda Franc");
+
+        rateList.get(124).setImageId(R.drawable.sar_saudi_arabia);
+        rateList.get(124).setCountry("Saudi Arabia");
+        rateList.get(124).setCurrency("Saudi Riyal");
+
+        rateList.get(125).setImageId(R.drawable.sbd_solomon_islands);
+        rateList.get(125).setCountry("Solomon Islands");
+        rateList.get(125).setCurrency("Solomon Islands Dollar");
+
+        rateList.get(126).setImageId(R.drawable.scr_seychelles);
+        rateList.get(126).setCountry("Seychelles");
+        rateList.get(126).setCurrency("Seychelles Rupee");
+
+        rateList.get(127).setImageId(R.drawable.sdg_sudan);
+        rateList.get(127).setCountry("Sudan");
+        rateList.get(127).setCurrency("Sudanese Pound");
+
+        rateList.get(128).setImageId(R.drawable.sek_sweden);
+        rateList.get(128).setCountry("Sweden");
+        rateList.get(128).setCurrency("Swedish Krona");
+
+        rateList.get(129).setImageId(R.drawable.sgd_singapore);
+        rateList.get(129).setCountry("Singapore");
+        rateList.get(129).setCurrency("Singapore Dollar");
+
+        //rateList.get(130).setImageId(R.drawable.); No flag
+        rateList.get(130).setCountry("Saint Helena, Ascension Island, Tristan da Cunha");
+        rateList.get(130).setCurrency("Saint Helena Pound");
+
+        rateList.get(131).setImageId(R.drawable.sll_sierra_leone);
+        rateList.get(131).setCountry("Sierra Leone");
+        rateList.get(131).setCurrency("Leone");
+
+        rateList.get(132).setImageId(R.drawable.sos_somalia);
+        rateList.get(132).setCountry("Somalia");
+        rateList.get(132).setCurrency("Somali Shilling");
+
+        rateList.get(133).setImageId(R.drawable.srd_suriname);
+        rateList.get(133).setCountry("Suriname");
+        rateList.get(133).setCurrency("Suriname Dollar");
+
+        rateList.get(134).setImageId(R.drawable.std_sao_tome_and_prince);
+        rateList.get(134).setCountry("Sao Tome and Prince");
+        rateList.get(134).setCurrency("Dobra");
+
+        rateList.get(135).setImageId(R.drawable.svc_el_salvador);
+        rateList.get(135).setCountry("El Salvador");
+        rateList.get(135).setCurrency("Salvadoran Colón");
+
+        rateList.get(136).setImageId(R.drawable.syp_syria);
+        rateList.get(136).setCountry("Syria");
+        rateList.get(136).setCurrency("Syrian Pound");
+
+        rateList.get(137).setImageId(R.drawable.szl_swaziland);
+        rateList.get(137).setCountry("Swaziland");
+        rateList.get(137).setCurrency("Lilangeni");
+
+        rateList.get(138).setImageId(R.drawable.thb_thailand);
+        rateList.get(138).setCountry("Thailand");
+        rateList.get(138).setCurrency("Baht");
+
+        rateList.get(139).setImageId(R.drawable.tjs_tajikistan);
+        rateList.get(139).setCountry("Tajikistan");
+        rateList.get(139).setCurrency("Somoni");
+
+        rateList.get(140).setImageId(R.drawable.tmt_turkmenistan);
+        rateList.get(140).setCountry("Turkmenistan");
+        rateList.get(140).setCurrency("Manat");
+
+        rateList.get(141).setImageId(R.drawable.tnd_tunisia);
+        rateList.get(141).setCountry("Tunisia");
+        rateList.get(141).setCurrency("Tunisian Dinar");
+
+        rateList.get(142).setImageId(R.drawable.top_tonga);
+        rateList.get(142).setCountry("Tonga");
+        rateList.get(142).setCurrency("Pa’anga");
+
+        rateList.get(143).setImageId(R.drawable.try_turkey);
+        rateList.get(143).setCountry("Turkey, North Cyprus");
+        rateList.get(143).setCurrency("Turkish Lira");
+
+        rateList.get(144).setImageId(R.drawable.ttd_trinidad_and_tobago);
+        rateList.get(144).setCountry("Trinidad and Tobago");
+        rateList.get(144).setCurrency("Trinidad and Tobago Dollar");
+
+        rateList.get(145).setImageId(R.drawable.twd_taiwan);
+        rateList.get(145).setCountry("Taiwan");
+        rateList.get(145).setCurrency("Taiwan Dollar");
+
+        rateList.get(146).setImageId(R.drawable.tzs_tanzania);
+        rateList.get(146).setCountry("Tanzania");
+        rateList.get(146).setCurrency("Tanzanian Shilling");
+
+        rateList.get(147).setImageId(R.drawable.uah_ukraine);
+        rateList.get(147).setCountry("Ukraine");
+        rateList.get(147).setCurrency("Hryvnia");
+
+        rateList.get(148).setImageId(R.drawable.ugx_uganda);
+        rateList.get(148).setCountry("Uganda");
+        rateList.get(148).setCurrency("Uganda Shilling");
+
+        rateList.get(149).setImageId(R.drawable.usd_united_states);
+        rateList.get(149).setCountry("United States of America, American Samoa, British Indian Ocean Territory, " +
                 "British Virgin Islands, Guam, Haiti, Marshall Islands, Micronesia, " +
                 "Northern Mariana Islands, Pacific Remote islands, Palau, nPanama, " +
                 "Puerto Rico, Turks and Caicos Islands, US Virgin Islands");
-        ratesList.get(149).setCurrency("US Dollar");
+        rateList.get(149).setCurrency("US Dollar");
 
-        ratesList.get(150).setImageId(R.drawable.uyu_uruguay);
-        ratesList.get(150).setCountry("Uruguay");
-        ratesList.get(150).setCurrency("Peso Uruguayo");
+        rateList.get(150).setImageId(R.drawable.uyu_uruguay);
+        rateList.get(150).setCountry("Uruguay");
+        rateList.get(150).setCurrency("Peso Uruguayo");
 
-        ratesList.get(151).setImageId(R.drawable.uzs_uzbekistn);
-        ratesList.get(151).setCountry("Uzbekistn");
-        ratesList.get(151).setCurrency("Uzbekistan Sum");
+        rateList.get(151).setImageId(R.drawable.uzs_uzbekistn);
+        rateList.get(151).setCountry("Uzbekistn");
+        rateList.get(151).setCurrency("Uzbekistan Sum");
 
-        ratesList.get(152).setImageId(R.drawable.vef_venezuela);
-        ratesList.get(152).setCountry("Venezuela");
-        ratesList.get(152).setCurrency("Bolivar Fuerte");
+        rateList.get(152).setImageId(R.drawable.vef_venezuela);
+        rateList.get(152).setCountry("Venezuela");
+        rateList.get(152).setCurrency("Bolivar Fuerte");
 
-        ratesList.get(153).setImageId(R.drawable.vnd_vietnam);
-        ratesList.get(153).setCountry("Vietnam");
-        ratesList.get(153).setCurrency("Dong");
+        rateList.get(153).setImageId(R.drawable.vnd_vietnam);
+        rateList.get(153).setCountry("Vietnam");
+        rateList.get(153).setCurrency("Dong");
 
-        ratesList.get(154).setImageId(R.drawable.vuv_vanuatu);
-        ratesList.get(154).setCountry("Vanuatu");
-        ratesList.get(154).setCurrency("Vatu");
+        rateList.get(154).setImageId(R.drawable.vuv_vanuatu);
+        rateList.get(154).setCountry("Vanuatu");
+        rateList.get(154).setCurrency("Vatu");
 
-        ratesList.get(155).setImageId(R.drawable.wst_samoa);
-        ratesList.get(155).setCountry("Samoa");
-        ratesList.get(155).setCurrency("Tala");
+        rateList.get(155).setImageId(R.drawable.wst_samoa);
+        rateList.get(155).setCountry("Samoa");
+        rateList.get(155).setCurrency("Tala");
 
-        ratesList.get(156).setImageId(R.drawable.xaf_cameroon);
-        ratesList.get(156).setCountry("Benin, Burkina Faso, Cameroon, Central African Republic, " +
+        rateList.get(156).setImageId(R.drawable.xaf_cameroon);
+        rateList.get(156).setCountry("Benin, Burkina Faso, Cameroon, Central African Republic, " +
                 "Chad, Congo (Brazzaville), Côte d'Ivoire, Equatorial Guinea, Gabon, Guinea-Bissau, " +
                 "Mali, Niger, Senegal, Togo");
-        ratesList.get(156).setCurrency("CFA Franc BCEAO");
+        rateList.get(156).setCurrency("CFA Franc BCEAO");
 
-        //ratesList.get(157).setImageId(R.drawable.); (Not relate to country like bitcon)
-        ratesList.get(157).setCountry("Worldwide");
-        ratesList.get(157).setCurrency("Silver Ounce");
+        //rateList.get(157).setImageId(R.drawable.); (Not relate to country like bitcon)
+        rateList.get(157).setCountry("Worldwide");
+        rateList.get(157).setCurrency("Silver Ounce");
 
-        //ratesList.get(158).setImageId(R.drawable.); Not relate to country like bitcon)
-        ratesList.get(158).setCountry("Worldwide");
-        ratesList.get(158).setCurrency("Gold Ounce ");
+        //rateList.get(158).setImageId(R.drawable.); Not relate to country like bitcon)
+        rateList.get(158).setCountry("Worldwide");
+        rateList.get(158).setCurrency("Gold Ounce ");
 
-        ratesList.get(159).setImageId(R.drawable.xcd_saint_kitts_and_nevis);
-        ratesList.get(159).setCountry("Anguilla, Antigua and Barbuda, Dominica, Grenada, " +
+        rateList.get(159).setImageId(R.drawable.xcd_saint_kitts_and_nevis);
+        rateList.get(159).setCountry("Anguilla, Antigua and Barbuda, Dominica, Grenada, " +
                 "Montserrat, Saint Kitts and Nevis, Saint Lucia, Saint Vincent and Grenadine");
-        ratesList.get(159).setCurrency("East Caribbean Dollar");
+        rateList.get(159).setCurrency("East Caribbean Dollar");
 
-        //ratesList.get(160).setImageId(R.drawable.); (International Monetary Fund)
-        ratesList.get(160).setCountry("WorldWide");
-        ratesList.get(160).setCurrency("IMF Special Drawing Rights");
+        //rateList.get(160).setImageId(R.drawable.); (International Monetary Fund)
+        rateList.get(160).setCountry("WorldWide");
+        rateList.get(160).setCurrency("IMF Special Drawing Rights");
 
-        //ratesList.get(161).setImageId(R.drawable.); (Communauté Financière Africaine (BCEAO))
-        ratesList.get(161).setCountry("WorldWide");
-        ratesList.get(161).setCurrency("CFA Franc");
+        //rateList.get(161).setImageId(R.drawable.); (Communauté Financière Africaine (BCEAO))
+        rateList.get(161).setCountry("WorldWide");
+        rateList.get(161).setCurrency("CFA Franc");
 
-        //ratesList.get(162).setImageId(R.drawable.wst_samoa); (MultiCounty)
-        ratesList.get(162).setCountry("French Polynesia, New Caledonia, Wallis and Futuna");
-        ratesList.get(162).setCurrency("CFP Franc");
+        //rateList.get(162).setImageId(R.drawable.wst_samoa); (MultiCounty)
+        rateList.get(162).setCountry("French Polynesia, New Caledonia, Wallis and Futuna");
+        rateList.get(162).setCurrency("CFP Franc");
 
-        ratesList.get(163).setImageId(R.drawable.yer_yemen);
-        ratesList.get(163).setCountry("Yemen");
-        ratesList.get(163).setCurrency("Yemeni Rial");
+        rateList.get(163).setImageId(R.drawable.yer_yemen);
+        rateList.get(163).setCountry("Yemen");
+        rateList.get(163).setCurrency("Yemeni Rial");
 
-        ratesList.get(164).setImageId(R.drawable.zar_south_africa);
-        ratesList.get(164).setCountry("South Africa, Lesotho, Namibia");
-        ratesList.get(164).setCurrency("Rand");
+        rateList.get(164).setImageId(R.drawable.zar_south_africa);
+        rateList.get(164).setCountry("South Africa, Lesotho, Namibia");
+        rateList.get(164).setCurrency("Rand");
 
-        ratesList.get(165).setImageId(R.drawable.zmw_zambia);
-        ratesList.get(165).setCountry("Zambia");
-        ratesList.get(165).setCurrency("Zambian Kwacha");
+        rateList.get(165).setImageId(R.drawable.zmw_zambia);
+        rateList.get(165).setCountry("Zambia");
+        rateList.get(165).setCurrency("Zambian Kwacha");
 
-        ratesList.get(166).setImageId(R.drawable.zmw_zambia);
-        ratesList.get(166).setCountry("Zambia");
-        ratesList.get(166).setCurrency("Zambian Kwacha");
+        rateList.get(166).setImageId(R.drawable.zmw_zambia);
+        rateList.get(166).setCountry("Zambia");
+        rateList.get(166).setCurrency("Zambian Kwacha");
 
-        ratesList.get(167).setImageId(R.drawable.zwl_zimbabwe);
-        ratesList.get(167).setCountry("Zimbabwe");
-        ratesList.get(167).setCurrency("Zimbabwe Dollar");
+        rateList.get(167).setImageId(R.drawable.zwl_zimbabwe);
+        rateList.get(167).setCountry("Zimbabwe");
+        rateList.get(167).setCurrency("Zimbabwe Dollar");
     }
 }

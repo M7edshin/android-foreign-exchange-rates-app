@@ -1,17 +1,16 @@
 package shahin.euexchange.background;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.loader.content.AsyncTaskLoader;
+
 import java.util.List;
 
-import shahin.euexchange.models.Rates;
+import shahin.euexchange.models.Rate;
 import shahin.euexchange.networking.FetchRatesData;
 
-//Created by Mohamed Shahin on 01/08/2017.
-
-public class CurrencyAsyncTaskLoader extends AsyncTaskLoader<List<Rates>> {
+public class CurrencyAsyncTaskLoader extends AsyncTaskLoader<List<Rate>> {
 
     private static final String LOG_TAG = CurrencyAsyncTaskLoader.class.getName();
 
@@ -24,13 +23,13 @@ public class CurrencyAsyncTaskLoader extends AsyncTaskLoader<List<Rates>> {
 
     @Override
     protected void onStartLoading() {
-        Log.i(LOG_TAG, "onStartLoading() is called");
+        Log.i(LOG_TAG, "MyLogs: onStartLoading() is called");
         forceLoad();
     }
 
     @Override
-    public List<Rates> loadInBackground() {
-        Log.i(LOG_TAG, "loadInBackground() is called");
+    public List<Rate> loadInBackground() {
+        Log.i(LOG_TAG, "MyLogs: loadInBackground() is called");
         if (url == null) return null;
         return FetchRatesData.fetchCurrencyRatesData(url);
     }

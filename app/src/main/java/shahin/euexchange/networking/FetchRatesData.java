@@ -18,10 +18,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import shahin.euexchange.models.Rates;
 import shahin.euexchange.R;
-
-//Created by Mohamed Shahin on 01/08/2017.
+import shahin.euexchange.models.Rate;
 
 public class FetchRatesData {
 
@@ -37,13 +35,13 @@ public class FetchRatesData {
     /**
      * Step 1: Extract data from JSON Format
      */
-    private static List<Rates> extractCurrencyRatesFromJson(String json) {
+    private static List<Rate> extractCurrencyRatesFromJson(String json) {
 
         if (TextUtils.isEmpty(json))
             return null;
 
         String latestDate;
-        List<Rates> ratesList = new ArrayList<>();
+        List<Rate> rateList = new ArrayList<>();
 
         try {
             JSONObject baseJsonResponse = new JSONObject(json);
@@ -53,14 +51,14 @@ public class FetchRatesData {
                 String currencySymbol = iterator.next();
                 String rate = String.valueOf(ratesObject.get(currencySymbol));
 
-                Rates currencyRates = new Rates(R.mipmap.ic_launcher_round, currencySymbol, "Currency Name",
+                Rate currencyRate = new Rate(R.mipmap.ic_launcher_round, currencySymbol, "Currency Name",
                         "Country Name", latestDate, rate);
-                ratesList.add(currencyRates);
+                rateList.add(currencyRate);
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem occurred during parsing the rates", e);
         }
-        return ratesList;
+        return rateList;
     }
 
     /**
@@ -132,7 +130,7 @@ public class FetchRatesData {
         return url;
     }
 
-    public static List<Rates> fetchCurrencyRatesData(String requestUrl) {
+    public static List<Rate> fetchCurrencyRatesData(String requestUrl) {
 
         Log.i(LOG_TAG, "fetchCurrencyRatesData() is called");
 

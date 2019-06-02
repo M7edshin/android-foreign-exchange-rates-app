@@ -34,5 +34,5 @@ local.properties
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
-Thumbs.db
+.ehthumbs.db
+.Thumbs.db

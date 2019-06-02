@@ -4,7 +4,7 @@
 
 ## Latest currencies published by the European Central-bank
 
-### EuroCC allows you to keep track of the latest rates published by the European Central Bank - Rates are hourly updated as well as basic information about any country.
+### EuroCC allows you to keep track of the latest rate published by the European Central Bank - Rates are hourly updated as well as basic information about any country.
 
 * If you travel a lot, different country every trip and wanna know how your budget would fit in different currencies, just convert from € to any other currency in the whole world with one tap. 
 

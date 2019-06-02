@@ -1,8 +1,6 @@
 package shahin.euexchange.ui;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,26 +9,27 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import shahin.euexchange.R;
-import shahin.euexchange.models.Rates;
+import shahin.euexchange.models.Rate;
 
-//Created by Mohamed Shahin on 07/08/2017.
+public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapter.RatesHolder> implements Filterable {
 
-public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapter.RatesHolder> implements Filterable{
-
-    private List<Rates> ratesList;
-    private List<Rates> ratesListFiltered;
+    private List<Rate> rateList;
+    private List<Rate> rateListFiltered;
     private CurrencyAdapterListener listener;
     private Context context;
 
-    public RateRecyclerAdapter(Context context, List<Rates> ratesList, CurrencyAdapterListener listener) {
+    public RateRecyclerAdapter(Context context, List<Rate> rateList, CurrencyAdapterListener listener) {
         this.context = context;
-        this.ratesList = ratesList;
-        this.ratesListFiltered = ratesList;
+        this.rateList = rateList;
+        this.rateListFiltered = rateList;
         this.listener = listener;
     }
 
@@ -44,7 +43,7 @@ public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull RatesHolder holder, int position) {
 
-        Rates rates = ratesListFiltered.get(position);
+        Rate rates = rateListFiltered.get(position);
 
         holder.iv_country.setImageResource(rates.getImageId());
         holder.tv_symbol.setText(rates.getSymbol());
@@ -58,9 +57,46 @@ public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return ratesListFiltered.size();
+        return rateListFiltered.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    rateListFiltered = rateList;
+                } else {
+                    List<Rate> filteredList = new ArrayList<>();
+                    for (Rate r : rateList) {
+                        if (r.getCountry().toLowerCase().contains(charString.toLowerCase())
+                                || r.getSymbol().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(r);
+                        }
+                    }
+                    rateListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = rateListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                rateListFiltered = (ArrayList<Rate>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    public interface CurrencyAdapterListener {
+        void onCurrencySelected(Rate rate);
+
+        void onCurrencyLongClickListener(Rate rate);
+    }
 
     public class RatesHolder extends RecyclerView.ViewHolder {
 
@@ -76,57 +112,12 @@ public class RateRecyclerAdapter extends RecyclerView.Adapter<RateRecyclerAdapte
             tv_currency = itemView.findViewById(R.id.tv_currency);
             tv_rate = itemView.findViewById(R.id.tv_rate);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                 listener.onCurrencySelected(ratesListFiltered.get(getAdapterPosition()));
-                }
-            });
+            itemView.setOnClickListener(view -> listener.onCurrencySelected(rateListFiltered.get(getAdapterPosition())));
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    listener.onCurrencyLongClickListener(ratesListFiltered.get(getAdapterPosition()));
-                    return true;
-                }
+            itemView.setOnLongClickListener(view -> {
+                listener.onCurrencyLongClickListener(rateListFiltered.get(getAdapterPosition()));
+                return true;
             });
         }
-    }
-
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
-                    ratesListFiltered = ratesList;
-                } else {
-                    List<Rates> filteredList = new ArrayList<>();
-                    for(Rates r: ratesList){
-                        if (r.getCountry().toLowerCase().contains(charString.toLowerCase())
-                                || r.getSymbol().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(r);
-                        }
-                    }
-                    ratesListFiltered = filteredList;
-                }
-
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = ratesListFiltered;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                ratesListFiltered = (ArrayList<Rates>) filterResults.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
-
-    public interface CurrencyAdapterListener{
-        void onCurrencySelected(Rates rates);
-        void onCurrencyLongClickListener(Rates rates);
     }
 }
